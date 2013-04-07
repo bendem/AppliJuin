@@ -79,7 +79,12 @@ function webroot($url) {
 function is_active($url) {
 	global $req;
 
-	return (trim(str_replace('index.php', '', url($req)), '/') == trim(str_replace('index.php', '', $url), '/'));
+	$tmp = $req;
+	if(empty($req['params'])) {
+		unset($tmp['params']);
+	}
+
+	return (trim(str_replace('index.php', '', url($tmp)), '/') == trim(str_replace('index.php', '', $url), '/'));
 }
 
 /**
