@@ -86,5 +86,3 @@ if(LOCAL) {
 	$time .= round($time_total, 6) . "s de chargement total\n";
 }
 debug($time);
-
-?>

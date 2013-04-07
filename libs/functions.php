@@ -154,5 +154,3 @@ function kick($connected = false) {
 		redirect($url);
 	}
 }
-
-?>

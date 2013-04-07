@@ -8,5 +8,3 @@ while (($file = readdir()) !== false) {
 		require_once LIBS_DIR . DS . $file;
 	}
 }
-
-?>

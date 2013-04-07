@@ -68,6 +68,3 @@ function session_flash() {
 
 	return $html;
 }
-
-
-?>

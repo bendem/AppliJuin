@@ -26,6 +26,3 @@ function index() {
 
 	return array('progress' => $progress, 'glob' => array_sum($progress) / count($progress));
 }
-
-
-?>

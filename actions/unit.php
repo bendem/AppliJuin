@@ -2,6 +2,3 @@
 
 function index() {
 }
-
-
-?>

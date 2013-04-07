@@ -109,5 +109,3 @@ function disconnect() {
 	session_set_flash('Vous êtes bien déconnecté...', 'success');
 	redirect(url());
 }
-
-?>

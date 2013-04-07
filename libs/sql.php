@@ -63,7 +63,3 @@ function sql_insert(array $data, $table, $force_quotes = false) {
 
 	return $q;
 }
-
-
-
-?>

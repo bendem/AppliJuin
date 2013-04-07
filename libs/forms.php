@@ -30,6 +30,3 @@ function form_input($name, array $options = array()) {
 
 	return $html;
 }
-
-
-?>
