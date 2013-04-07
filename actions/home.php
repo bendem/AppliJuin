@@ -11,13 +11,16 @@
  */
 function index() {
 	$progress = array(
-		'Design'       => 97,
+		'Design'       => 100,
 		'MVC'          => 100,
-		'BDD'          => 60,
-		'Formulaires'  => 20,
-		'Utilisateurs' => 2,
+		'BDD'          => 20,
+		'Vues de la bdd' => 5,
+		'Formulaires'  => 2,
+		'Utilisateurs' => 100,
 		'Erreurs'      => 0.5
 	);
+
+	arsort($progress);
 
 	$glob = 0;
 	foreach ($progress as $v) {
