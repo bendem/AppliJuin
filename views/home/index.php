@@ -14,7 +14,7 @@
 <?php foreach($progress as $k => $v): ?>
 	<div class="row">
 		<div class="span2 offset1">
-			<?= $k ?>
+			<?= ucfirst($k) ?>
 		</div>
 		<div class="span9">
 			<div class="progress">

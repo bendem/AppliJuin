@@ -11,21 +11,23 @@
  */
 function index() {
 	$progress = array(
-		'Design'       => 100,
-		'MVC'          => 100,
-		'BDD'          => 20,
-		'Vues de la bdd' => 5,
-		'Formulaires'  => 2,
-		'Utilisateurs' => 100,
-		'Erreurs'      => 0.5
+		'Design'            => 100,
+		'MVC'               => 100,
+		'MRD'               => 80,
+		'BDD'               => 0.5,
+		'unit view'         => 40,
+		'unit edit'         => 0,
+		'unit delete'       => 0,
+		'depot view'        => 40,
+		'depot edit'        => 0,
+		'depot delete'      => 0,
+		'product view'      => 0,
+		'product edit'      => 0,
+		'product delete'    => 0,
+		'command'			=> 0,
+		'users'      		=> 100,
+		'errors'           	=> 0.5
 	);
-
-	arsort($progress);
-
-	$glob = 0;
-	foreach ($progress as $v) {
-		$glob += $v;
-	}
 
 	return array('progress' => $progress, 'glob' => array_sum($progress) / count($progress));
 }
