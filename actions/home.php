@@ -14,7 +14,7 @@ function index() {
 		'Design'            => 100,
 		'MVC'               => 100,
 		'MRD'               => 80,
-		'BDD'               => 0.5,
+		'BDD'               => 1,
 		'unit view'         => 40,
 		'unit edit'         => 0,
 		'unit delete'       => 0,
@@ -26,7 +26,7 @@ function index() {
 		'product delete'    => 0,
 		'command'			=> 0,
 		'users'      		=> 100,
-		'errors'           	=> 0.5
+		'errors'           	=> 1
 	);
 
 	return array('progress' => $progress, 'glob' => array_sum($progress) / count($progress));
