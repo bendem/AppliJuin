@@ -1,0 +1,26 @@
+body {
+	padding-top: 70px;
+	overflow-y: scroll;
+}
+.row {
+	font-size: 15px;
+}
+footer {
+	margin: 25px 0;
+	padding: 10px 0;
+	border-top: 1px solid #e3e3e3;
+}
+
+a.muted {
+	text-decoration: none;
+}
+a.muted:hover {
+	color: inherit;
+}
+.text-justify {
+	text-align: justify;
+}
+
+.dropdown-menu .divider {
+	margin: 5px 2px;
+}
