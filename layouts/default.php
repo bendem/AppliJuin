@@ -8,20 +8,32 @@
 		<script src="<?= webroot('js/main.js') ?>"></script>
 		<link rel="stylesheet" href="<?= webroot('css/bootstrap.min.css') ?>">
 		<link rel="stylesheet" href="<?= webroot('css/style.css') ?>">
-		<title><?= (isset($title_for_layout)) ? $title_for_layout : 'AppliJuin' ?></title>
+		<title><?= (isset($title_for_layout)) ? preg_replace('#<.*>.*</.*>#i', '', $title_for_layout) . ' - ' : '' ?>AppliJuin</title>
 	</head>
 	<body>
 
-		<?= nav() ?>
+		<?= nav_top() ?>
 
-		<div class="container">
+		<div class="container-fluid">
 
 			<?= breadcrumb($req); ?>
-
 			<?= session_flash(); ?>
 
-			<div class="row">
+			<div class="row-fluid">
 				<div class="span12">
+					<div class="page-header">
+						<h1><?= (isset($title_for_layout)) ? $title_for_layout : 'AppliJuin' ?></h1>
+					</div>
+				</div>
+			</div>
+
+			<div class="row-fluid">
+				<div class="span2">
+
+					<?= nav_sidebar() ?>
+
+				</div>
+				<div class="span10">
 					<?= $content_for_layout ?>
 				</div>
 			</div>

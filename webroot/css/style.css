@@ -2,7 +2,7 @@ body {
 	padding-top: 70px;
 	overflow-y: scroll;
 }
-.row {
+.row, .row-fluid {
 	font-size: 15px;
 }
 footer {
@@ -23,4 +23,14 @@ a.muted:hover {
 
 .dropdown-menu .divider {
 	margin: 5px 2px;
+}
+
+.well-nav {
+	padding: 8px 0;
+}
+
+.well-nav li a {
+	padding-top: 7px;
+	padding-bottom: 7px;
+	margin-top: 5px;
 }

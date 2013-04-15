@@ -1,7 +1,6 @@
-<div class="page-header">
-	<h1>Accueil. <small>Voici une appli Php !</small></h1>
-</div>
-<div class="row">
+<?php $title_for_layout = 'Accueil <small>Voici une appli php !</small>' ?>
+
+<div class="row-fluid">
 	<div class="span3">
 		Progression globale :
 	</div>
@@ -12,7 +11,7 @@
 	</div>
 </div>
 <?php foreach($progress as $k => $v): ?>
-	<div class="row">
+	<div class="row-fluid">
 		<div class="span2 offset1">
 			<?= ucfirst($k) ?>
 		</div>

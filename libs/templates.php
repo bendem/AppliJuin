@@ -19,21 +19,17 @@ function breadcrumb(array $req) {
  *
  * @return string Code de la navigation
  */
-function nav() {
+function nav_top() {
 	$brand = array(url() => 'Appli Juin');
+
+	global $req;
 
 	// Contient partie principale de la navigation
 	$nav = array(
-		//url() => 'home',
-		//url(array(
-		//	'view' => 'test'
-		//)) => 'test',
-		url(array(
-			'action' => 'unit'
-		)) => 'unités de fabrication',
-		url(array(
-			'action' => 'depot'
-		)) => 'dépôts'
+		/*
+			TODO : Ajouter une entrée 'Nouveau' dans la topbar si la page le nécessite
+		 */
+		//url($req) => 'nouveau'
 	);
 
 	// Contient le menu de droite
@@ -64,7 +60,26 @@ function nav() {
 	}
 
 	ob_start();
-	require TEMPLATES_DIR . DS . 'nav.php';
+	require TEMPLATES_DIR . DS . 'nav_top.php';
+	$html = ob_get_clean();
+	return $html;
+}
+
+
+function nav_sidebar() {
+	// Contient partie principale de la navigation
+	$nav = array(
+		url() => 'Accueil',
+		url(array(
+			'action' => 'unit'
+		)) => 'unités de fabrication',
+		url(array(
+			'action' => 'depot'
+		)) => 'dépôts'
+	);
+
+	ob_start();
+	require TEMPLATES_DIR . DS . 'nav_sidebar.php';
 	$html = ob_get_clean();
 	return $html;
 }

@@ -70,6 +70,8 @@ $content_for_layout = ob_get_clean();
 /* Chargement du layout */
 require LAYOUTS_DIR . DS . $chosen_layout . '.php';
 
+
+/* Mesure du temps de chargement */
 $req_time = (LOCAL) ? $_SERVER['REQUEST_TIME_FLOAT'] : $_SERVER['REQUEST_TIME'];
 $time_end = microtime(true);
 $time_total = $time_end - $req_time;
