@@ -83,7 +83,7 @@ function webroot($url) {
 function is_active($url) {
 	global $req;
 
-	if(isset($req['action'])) {
+	if(isset($req['action']) && strpos('?action', $url) === 0) {
 		$res = (strpos($url, url(array('action' => $req['action']))) === 0);
 	} else {
 		$tmp = $req;
