@@ -34,7 +34,9 @@
 
 				</div>
 				<div class="span10">
+
 					<?= $content_for_layout ?>
+
 				</div>
 			</div>
 			<footer>
