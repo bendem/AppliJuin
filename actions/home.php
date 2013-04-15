@@ -13,8 +13,8 @@ function index() {
 	$progress = array(
 		'Design'            => 100,
 		'MVC'               => 100,
-		'MRD'               => 80,
-		'BDD'               => 1,
+		'MRD'               => 100,
+		'BDD'               => 100,
 		'unit view'         => 40,
 		'unit edit'         => 0,
 		'unit delete'       => 0,
@@ -26,7 +26,7 @@ function index() {
 		'product delete'    => 0,
 		'command'			=> 0,
 		'users'      		=> 100,
-		'errors'           	=> 1
+		'errors'           	=> 3
 	);
 
 	return array('progress' => $progress, 'glob' => array_sum($progress) / count($progress));

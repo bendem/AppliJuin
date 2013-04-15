@@ -12,6 +12,7 @@ $dis = array(
 	'b', 'e', 'f', 'p'
 );
 $active = 'v';
+var_dump($data);
 ?>
 <div class="row">
 	<div class="span12">
@@ -36,38 +37,30 @@ $active = 'v';
 					<th>Nom</th>
 					<th>Localisation</th>
 					<th>Capacité maximale</th>
-					<th>Actions</th>
+					<?php if(is_connected()): ?>
+						<th>Actions</th>
+					<?php endif; ?>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>0</td>
-					<td>bouh</td>
-					<td>Liège</td>
-					<td>15</td>
-					<td>
-						<a href="<?= url(array('action' => 'unit', 'view' => 'edit', 'params' => array('nom', 0))) ?>" class="btn primary">
-							<span class="icon-edit"></span>
-						</a>
-						<a href="#" class="btn btn-danger confirm" data-content="Êtes-vous sur de vous ?" data-placement="bottom" data-text="Vraiment sur ?" data-trigger="hover" data-toggle="popover" data-title="Confirmation">
-							<span class="icon-remove"></span>
-						</a>
-					</td>
-				</tr>
-				<tr>
-					<td>0</td>
-					<td>bouh</td>
-					<td>Liège</td>
-					<td>15</td>
-					<td>
-						<a href="<?= url(array('action' => 'unit', 'view' => 'edit', 'params' => array('nom', 0))) ?>" class="btn primary">
-							<span class="icon-edit"></span>
-						</a>
-						<a href="#" class="btn btn-danger confirm" data-content="Êtes-vous sur de vous ?" data-placement="bottom" data-text="Vraiment sur ?" data-trigger="hover" data-toggle="popover" data-title="Confirmation">
-							<span class="icon-remove"></span>
-						</a>
-					</td>
-				</tr>
+				<?php foreach($data as $v): ?>
+					<tr>
+						<td>0</td>
+						<td>bouh</td>
+						<td>Liège</td>
+						<td>15</td>
+						<?php if(is_connected()): ?>
+							<td>
+								<a href="<?= url(array('action' => 'unit', 'view' => 'edit', 'params' => array('nom', 0))) ?>" class="btn primary">
+									<span class="icon-edit"></span>
+								</a>
+								<a href="#" class="btn btn-danger confirm" data-content="Êtes-vous sur de vous ?" data-placement="bottom" data-text="Vraiment sur ?" data-trigger="hover" data-toggle="popover" data-title="Confirmation">
+									<span class="icon-remove"></span>
+								</a>
+							</td>
+						<?php endif; ?>
+					</tr>
+				<?php endforeach; ?>
 			</tbody>
 		</table>
 	</div>
