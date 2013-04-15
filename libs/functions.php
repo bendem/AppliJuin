@@ -8,7 +8,7 @@ function debug($var) {
 	if(!DEBUG) {
 		return false;
 	}
-	echo '<pre class="well container debug">';
+	echo '<pre class="well container-fluid debug">';
 	ob_start();
 	print_r($var);
 	echo htmlentities(ob_get_clean(), ENT_QUOTES, 'utf-8');
@@ -41,9 +41,13 @@ function url(array $req = array()) {
 		if(!is_array($req['params'])) {
 			return false;
 		}
-		$tmp[] = 'params=' . implode(PARAMS_DELIMITER, $req['params']);
+		// uniquement si des paramètres sont définis...
+		if(!empty($req['params'])) {
+			$tmp[] = 'params=' . implode(PARAMS_DELIMITER, $req['params']);
+		}
 	}
 	unset($req['params']);
+	//var_dump($req);
 
 	if($req['action'] == INDEX_ACTION) {
 		unset($req['action']);
@@ -158,4 +162,12 @@ function kick($connected = false) {
 		session_set_flash($text, 'error');
 		redirect($url);
 	}
+}
+
+/**
+ * Vérifie si l'utilisateur est connecté
+ * @return boolean L'utilisateur est connecté ou pas ?
+ */
+function is_connected() {
+	return !empty($_SESSION['user']);
 }
