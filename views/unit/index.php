@@ -1,26 +1,10 @@
 <?php $title_for_layout = 'Unités de fabrication' ?>
 
-<?php
-$alph = array(
-	'a', 'b', 'c', 'd',
-	'e', 'f', 'g', 'h',
-	'i', 'j', 'k', 'l',
-	'm', 'n', 'o', 'p',
-	'q', 'r', 's', 't',
-	'u', 'v', 'w', 'x',
-	'y', 'z'
-);
-$dis = array(
-	'b', 'e', 'f', 'p'
-);
-$active = 'v';
-var_dump($data);
-?>
 <div class="row-fluid">
 	<div class="span12">
 		<div class="btn-group">
 			<?php foreach ($alph as $v): ?>
-				<a href="#" class="btn <?= (in_array($v, $dis)) ? 'disabled ' : '' ?><?= ($v == $active) ? 'active' : '' ?>"><?= $v ?></a>
+				<a href="<?= url(array_merge($req, array('params' => array(strtolower($v))))) ?>" class="btn <?= (!in_array($v, $enabled)) ? 'disabled ' : '' ?><?= ($v == $active) ? 'active' : '' ?>"><?= $v ?></a>
 			<?php endforeach; ?>
 		</div>
 	</div>
@@ -32,7 +16,9 @@ var_dump($data);
 				<tr>
 					<th>#</th>
 					<th>Nom</th>
-					<th>Localisation</th>
+					<th>Adresse</th>
+					<th>CP</th>
+					<th>Ville</th>
 					<th>Capacité maximale</th>
 					<?php if(is_connected()): ?>
 						<th>Actions</th>
@@ -42,10 +28,12 @@ var_dump($data);
 			<tbody>
 				<?php foreach($data as $v): ?>
 					<tr>
-						<td>0</td>
-						<td>bouh</td>
-						<td>Liège</td>
-						<td>15</td>
+						<td><?= $v['num'] ?></td>
+						<td><?= $v['nom'] ?></td>
+						<td><?= $v['adresse'] ?></td>
+						<td><?= $v['ville'] ?></td>
+						<td><?= $v['cp'] ?></td>
+						<td><?= $v['capaciteMax'] ?></td>
 						<?php if(is_connected()): ?>
 							<td>
 								<a href="<?= url(array('action' => 'unit', 'view' => 'edit', 'params' => array('nom', 0))) ?>" class="btn primary">

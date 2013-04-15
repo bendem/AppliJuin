@@ -20,7 +20,7 @@ function login() {
 	);
 
 	if(array_keys($champs) == array_keys($_POST)) {
-		db_connect();
+		mysql_auto_connect();
 		$q = sql_select('*', 'users', array(
 			'login' => $_POST['nom'],
 			'pwd' => sha1($_POST['pwd'])
@@ -57,7 +57,7 @@ function register() {
 	);
 
 	if(array_keys($champs) == array_keys($_POST)) {
-		db_connect();
+		mysql_auto_connect();
 
 		$q = sql_select('*', 'users', array(
 			'login' => $_POST['nom']

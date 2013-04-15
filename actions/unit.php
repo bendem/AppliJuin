@@ -1,22 +1,29 @@
 <?php
 
-function index() {
-	//try {
-	//	$c = mysqli_connect('localhost', 'root', '', 'demartbe');
-	//	var_dump($c);
-	//	mysqli_set_opt($c, /* Cette constante doit changer */MYSQL_ATTR_INIT_COMMAND, 'SET NAMES utf8');
-	//} catch(Exception $e) {
-	//	die($e->getMessage());
-	//}
-
-	db_connect();
+function index($fla = null) {
+	mysql_auto_connect();
 	$sql = sql_select('*', 'unite_fabrication');
-	var_dump($sql);
-	//$r = mysqli_query($c, $sql);
 	$r = mysql_query($sql);
-	//var_dump($r);
-	// pas mysql_fetch_assoc !
+	$data = mysql_fetch_assoc_all($r);
 
-	return array('data' => mysql_fetch_assoc($r));
-	//return array('data' => mysqli_fetch_assoc($r));
+	// Premières lettres définies
+	$enabled = array();
+	foreach ($data as $v) {
+		$fl = strtoupper(substr($v['nom'], 0, 1));
+		if(!in_array($fl, $enabled)) {
+			$enabled[] = $fl;
+		}
+	}
+
+	$alph = array();
+	for ($i=0; $i < 26; $i++) {
+		$alph[] = chr($i + ord('A'));
+	}
+
+	return array(
+		'alph' => $alph,
+		'active' => ($fla) ? strtoupper($fla[0]) : null,
+		'enabled' => $enabled,
+		'data' => $data
+	);
 }

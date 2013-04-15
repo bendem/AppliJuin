@@ -75,7 +75,7 @@ function webroot($url) {
 }
 
 /**
- * Vérifie si le lien conduit vers la page actuelle
+ * Vérifie si le lien conduit vers la page/action actuelle
  * @param string $url Url à vérifier
  *
  * @return boolean
@@ -83,42 +83,15 @@ function webroot($url) {
 function is_active($url) {
 	global $req;
 
-	$tmp = $req;
-	if(empty($req['params'])) {
+	if(isset($req['action'])) {
+		$res = (strpos($url, url(array('action' => $req['action']))) === 0);
+	} else {
+		$tmp = $req;
 		unset($tmp['params']);
+		$res = (trim(str_replace('index.php', '', url($tmp)), '/') == trim(str_replace('index.php', '', $url), '/'));
 	}
 
-	return (trim(str_replace('index.php', '', url($tmp)), '/') == trim(str_replace('index.php', '', $url), '/'));
-}
-
-/**
- *
- */
-function db_connect(array $config = array()) {
-	$default_config = array(
-		'host' => 'eve',
-		'user' => 'demartbe',
-		'pwd'  => 'demartbe',
-		'db_name' => 'demartbe'
-	);
-
-	if(LOCAL || !empty($config)) {
-		$config = array(
-			'host' => 'localhost',
-			'user' => 'root',
-			'pwd'  => ''
-		);
-	}
-
-	$config = array_merge($default_config, $config);
-
-	$link = mysql_connect($config['host'], $config['user'], $config['pwd'])
-		or die("Impossible de se connecter : " . mysql_error());
-	mysql_select_db($config['db_name'], $link)
-		or die('Base de donnée dans les ténèbres !');
-	mysql_set_charset('utf8')
-		or die('Utf-8 non supporté : F*** OFF !!!!!!!!');
-	return $link;
+	return $res;
 }
 
 /**
