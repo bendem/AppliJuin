@@ -1,8 +1,6 @@
-<div class="page-header">
-	<h1>Profil</h1>
-</div>
+<?php $title_for_layout = 'Profil' ?>
 
-<div class="row">
+<div class="row-fluid">
 	<div class="span12">
 		<form action="<?= url($req) ?>" method="post" class="form-horizontal">
 

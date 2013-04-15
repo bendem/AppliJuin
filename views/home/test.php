@@ -1,3 +1,5 @@
+<?php $title_for_layout = "Test" ?>
+
 <?php
 $types = array(
 	'success',
@@ -9,10 +11,7 @@ for ($i=0; $i < rand(0,5); $i++) {
 	session_set_flash('bouh !', $types[rand(0,3)]);
 }
 ?>
-<div class="page-header">
-	<h1>Test</h1>
-</div>
-<div class="row text-justify">
+<div class="row-fluid text-justify">
 	<div class="span4">
 		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,

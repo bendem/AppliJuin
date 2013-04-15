@@ -1,9 +1,6 @@
-<div class="row">
-	<div class="span12">
-		<h1 class="page-header">Dépôts</h1>
-	</div>
-</div>
-<div class="row">
+<?php $title_for_layout = "Dépôts" ?>
+
+<div class="row-fluid">
 	<div class="span12">
 		<table class="table table-striped">
 			<thead>

@@ -1,13 +1,16 @@
-<div class="page-header">
-	<h1>Register</h1>
-</div>
-<form action="<?= url($req) ?>" method="post" class="form-horizontal">
+<?php $title_for_layout = 'Register' ?>
 
-	<?php foreach($champs as $k => $v): ?>
-		<?= form_input($k, $v) ?>
-	<?php endforeach; ?>
+<div class="row-fluid">
+	<div class="span12">
+		<form action="<?= url($req) ?>" method="post" class="form-horizontal">
 
-	<div class="form-actions">
-		<input type="submit" class="btn">
+			<?php foreach($champs as $k => $v): ?>
+				<?= form_input($k, $v) ?>
+			<?php endforeach; ?>
+
+			<div class="form-actions">
+				<input type="submit" class="btn">
+			</div>
+		</form>
 	</div>
-</form>
+</div>

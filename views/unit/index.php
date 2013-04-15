@@ -1,3 +1,5 @@
+<?php $title_for_layout = 'Unités de fabrication' ?>
+
 <?php
 $alph = array(
 	'a', 'b', 'c', 'd',
@@ -14,12 +16,7 @@ $dis = array(
 $active = 'v';
 var_dump($data);
 ?>
-<div class="row">
-	<div class="span12">
-		<h1 class="page-header">Unités de fabrication</h1>
-	</div>
-</div>
-<div class="row">
+<div class="row-fluid">
 	<div class="span12">
 		<div class="btn-group">
 			<?php foreach ($alph as $v): ?>
@@ -28,7 +25,7 @@ var_dump($data);
 		</div>
 	</div>
 </div>
-<div class="row">
+<div class="row-fluid">
 	<div class="span12">
 		<table class="table table-striped table-hover">
 			<thead>
