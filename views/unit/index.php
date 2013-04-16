@@ -36,10 +36,10 @@
 						<td><?= $v['capaciteMax'] ?></td>
 						<?php if(is_connected()): ?>
 							<td>
-								<a href="<?= url(array('action' => 'unit', 'view' => 'edit', 'params' => array('nom', 0))) ?>" class="btn primary">
+								<a href="<?= url(array('action' => 'unit', 'view' => 'edit', 'params' => array($v['nom'], $v['num']))) ?>" class="btn primary">
 									<span class="icon-edit"></span>
 								</a>
-								<a href="#" class="btn btn-danger confirm" data-content="Êtes-vous sur de vous ?" data-placement="bottom" data-text="Vraiment sur ?" data-trigger="hover" data-toggle="popover" data-title="Confirmation">
+								<a href="#" class="btn btn-danger" data-content="<?= $del_confirm ?>" data-html="true" data-placement="bottom" data-text="Vraiment sur ?" data-trigger="click" data-toggle="popover" data-title="Confirmation">
 									<span class="icon-remove"></span>
 								</a>
 							</td>

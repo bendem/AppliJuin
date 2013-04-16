@@ -35,7 +35,8 @@ function index($fla = null) {
 		'alph' => $alph,
 		'active' => ($fla) ? strtoupper($fla[0]) : null,
 		'enabled' => $enabled,
-		'data' => $data
+		'data' => $data,
+		'del_confirm' => htmlentities('Êtes-vous sûr ? <a href="#" class="del btn btn-warning">Oui</a>')
 	);
 }
 
