@@ -4,7 +4,7 @@
 			<a class="brand" href="<?= key($brand) ?>"><?= end($brand) ?></a>
 			<ul class="nav">
 				<?php foreach($nav as $url => $text): ?>
-					<li<?= (is_active($url)) ? ' class="active"' : '' ?>>
+					<li<?= (is_active($url, true)) ? ' class="active"' : '' ?>>
 						<a href="<?= $url ?>"><?= ucfirst($text) ?></a>
 					</li>
 				<?php endforeach; ?>

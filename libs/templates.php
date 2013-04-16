@@ -24,13 +24,23 @@ function nav_top() {
 
 	global $req;
 
-	// Contient partie principale de la navigation
-	$nav = array(
-		/*
-			TODO : Ajouter une entrée 'Nouveau' dans la topbar si la page le nécessite
-		 */
-		//url($req) => 'nouveau'
+	$add = array(
+		'unit',
+		'depot'
 	);
+
+	$nav = array();
+
+	// Contient partie principale de la navigation
+	if(in_array($req['action'], $add)) {
+		$nav = array(
+			url(array(
+				'action' => $req['action'],
+				'view'	 => 'add'
+			)) => 'ajouter'
+		);
+
+	}
 
 	// Contient le menu de droite
 	if(!session_read('user')) {

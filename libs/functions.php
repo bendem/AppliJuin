@@ -22,6 +22,8 @@ function debug($var) {
  * @return string Url générée
  */
 function url(array $req = array()) {
+	array_multisort($req);
+
 	if($req == array()) {
 		return URL_ROOT . '/';
 	}
@@ -77,21 +79,22 @@ function webroot($url) {
 /**
  * Vérifie si le lien conduit vers la page/action actuelle
  * @param string $url Url à vérifier
+ * @param bool $strict Prend en compte la vue (pas uniquement l'action)
  *
  * @return boolean
  */
-function is_active($url) {
+function is_active($url, $strict = false) {
 	global $req;
 
-	if(isset($req['action']) && strpos('?action', $url) === 0) {
-		$res = (strpos($url, url(array('action' => $req['action']))) === 0);
+	if(preg_match('/.*?action=' . $req['action'] . '.*/i', $url) && !$strict) {
+		return true;
 	} else {
-		$tmp = $req;
-		unset($tmp['params']);
-		$res = (trim(str_replace('index.php', '', url($tmp)), '/') == trim(str_replace('index.php', '', $url), '/'));
+		if($url == url($req)) {
+			return true;
+		}
 	}
 
-	return $res;
+	//return $res;
 }
 
 /**
