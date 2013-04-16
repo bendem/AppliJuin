@@ -2,13 +2,14 @@
 
 /**
  * Génère un input de type text | number | password | date | file
- * @param array $options Options à ajouter au champs (label, id, state, class...)
+ * @param array $options Options à ajouter au champs (label, id, state, class, help...)
  *
  * @return string Code du tag généré
  */
 function form_input($name, array $options = array()) {
 	// attributs non applicables sur le tag input
 	$exceptions = array(
+		'help',
 		'state',
 		'type',
 		'id',

@@ -4,5 +4,10 @@
 	<?php endif; ?>
 	<div class="controls">
 		<input type="<?= isset($specOptions['type']) ? $specOptions['type'] : 'text' ?>" name="<?= $name ?>" id="<?= isset($specOptions['id']) ? $specOptions['id'] : 'form_' . $name ?>" <?php foreach($options as $k => $v) echo $k . '="' . $v . '"'; ?>>
+		<?php if(isset($specOptions['help'])): ?>
+			<span class="help-inline">
+				<?= $specOptions['help'] ?>
+			</span>
+		<?php endif; ?>
 	</div>
 </div>
