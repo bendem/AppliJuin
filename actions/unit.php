@@ -2,18 +2,8 @@
 
 function index($fla = null) {
 	mysql_auto_connect();
-	if($fla) {
-		$condSeparator = 'like';
-		$sql = sql_select(
-			'*',
-			'unite_fabrication',
-			'nom like "' . mysql_real_escape_string($fla[0]) . '%"',
-			'like'
-		);
 
-	} else {
-		$sql = sql_select('*', 'unite_fabrication');
-	}
+	$sql = sql_select('*', 'unite_fabrication');
 	$r = mysql_query($sql);
 	$data = mysql_fetch_assoc_all($r);
 
@@ -26,6 +16,20 @@ function index($fla = null) {
 		}
 	}
 
+	if($fla) {
+		$condSeparator = 'like';
+		$sql = sql_select(
+			'*',
+			'unite_fabrication',
+			'nom like "' . mysql_real_escape_string($fla[0]) . '%"',
+			'like'
+		);
+
+		$r = mysql_query($sql);
+		$data = mysql_fetch_assoc_all($r);
+	}
+
+
 	$alph = array();
 	for ($i=0; $i < 26; $i++) {
 		$alph[] = chr($i + ord('A'));
@@ -36,7 +40,11 @@ function index($fla = null) {
 		'active' => ($fla) ? strtoupper($fla[0]) : null,
 		'enabled' => $enabled,
 		'data' => $data,
-		'del_confirm' => htmlentities('Êtes-vous sûr ? <a href="#" class="del btn btn-warning">Oui</a>')
+		'del_confirm' => htmlentities('Êtes-vous sûr ? <a href="' . url(array(
+			'action' => 'unit',
+			'view' => 'del',
+			'params' => array('%s', '%s')
+		)) . '" class="del btn btn-warning">Oui</a>')
 	);
 }
 
@@ -125,4 +133,14 @@ function add() {
 		'post' => $post,
 		'errors' => $errors
 	);
+}
+
+function del($params) {
+	kick();
+	var_dump($params);
+}
+
+function edit($params) {
+	kick();
+	var_dump($params);
 }

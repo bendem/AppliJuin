@@ -26,6 +26,13 @@
 				</tr>
 			</thead>
 			<tbody>
+				<?php if(empty($data)): ?>
+					<tr>
+						<td colspan="7" style="text-align: center;">
+							<div class="alert alert-error">Pas de données</div>
+						</td>
+					</tr>
+				<?php endif; ?>
 				<?php foreach($data as $v): ?>
 					<tr>
 						<td><?= $v['num'] ?></td>
@@ -39,7 +46,7 @@
 								<a href="<?= url(array('action' => 'unit', 'view' => 'edit', 'params' => array($v['nom'], $v['num']))) ?>" class="btn primary">
 									<span class="icon-edit"></span>
 								</a>
-								<a href="#" class="btn btn-danger" data-content="<?= $del_confirm ?>" data-html="true" data-placement="bottom" data-text="Vraiment sur ?" data-trigger="click" data-toggle="popover" data-title="Confirmation">
+								<a href="#" class="btn btn-danger" data-content="<?php printf($del_confirm, $v['nom'], $v['num']) ?>" data-html="true" data-placement="bottom" data-text="Vraiment sur ?" data-trigger="click" data-toggle="popover" data-title="Confirmation">
 									<span class="icon-remove"></span>
 								</a>
 							</td>
