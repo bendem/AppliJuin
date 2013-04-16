@@ -142,5 +142,39 @@ function del($params) {
 
 function edit($params) {
 	kick();
-	var_dump($params);
+	mysql_auto_connect();
+
+	/* Traitement du post */
+	if(!empty($_POST)) {
+		/*
+			TODO : traitement du post
+		 */
+	}
+
+	/* Récupération des infos de l'unité */
+	$sql = sql_select('*', 'unite_fabrication', array(
+		'num' => $params[1]
+	));
+	$r = mysql_query($sql);
+	if(!$data = mysql_fetch_assoc($r)) {
+		session_set_flash("Cette unité n'existe pas...", 'error');
+		redirect(url(array(
+			'action' => 'unit'
+		)));
+	}
+
+	$post = array();
+	foreach ($data as $k => $v) {
+		$post[$k]['value'] = $v;
+		$post[$k]['label'] = ucfirst($k);
+		if($k == 'num') {
+			$post[$k]['disabled'] = 'disabled';
+		} elseif($k == 'capaciteMax') {
+			$post[$k]['label'] = 'Capacité Maximale';
+		}
+	}
+
+	return array(
+		'data' => $post
+	);
 }
