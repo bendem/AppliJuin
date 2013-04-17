@@ -124,12 +124,13 @@ function redirect($url, $code = null) {
  *							 Si faux, renvoie vers la page de connexion
  */
 function kick($connected = false) {
-	if(DEBUG) {
-		session_set_flash('DEBUG : Redirection empêchée (pb de connexion)', 'warning');
-		return;
-	}
 
 	if(session_read('user') == $connected) {
+		if(DEBUG) {
+			session_set_flash('DEBUG : Redirection empêchée (pb de connexion)', 'warning');
+			return;
+		}
+
 		if($connected) {
 			$text = "Vous êtes déjà connecté !";
 			$url = url();

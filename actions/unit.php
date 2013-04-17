@@ -92,9 +92,6 @@ function add() {
 			}
 
 			if(empty($errors)) {
-				/*
-					TO DO : Ajouter en bdd
-				 */
 				mysql_auto_connect();
 				$tmp = $_POST;
 				unset($tmp['capaciteMax']);
