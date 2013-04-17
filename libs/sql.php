@@ -63,3 +63,31 @@ function sql_insert(array $data, $table, $force_quotes = false) {
 
 	return $q;
 }
+
+function sql_update(array $data, $table, $cond, $force_quotes = false) {
+	$q = 'UPDATE ' . $table . ' SET ';
+	$d = array();
+	foreach ($data as $k => $v) {
+		if(is_numeric($v) && !$force_quotes) {
+			$d[] = $k . '=' . $v;
+		} else {
+			$d[] = $k . "='" . mysql_real_escape_string($v) . "'";
+		}
+	}
+
+	$q .= implode(', ', $d) . ' WHERE ';
+
+	if(is_array($cond)) {
+		$q .= current(array_keys($cond)) . '=';
+		if(is_numeric(current(array_values($cond))) && !$force_quotes) {
+			$q .= current(array_values($cond));
+		} else {
+			$q .= "'" . mysql_real_escape_string(current(array_values($cond))) . "'";
+		}
+	} else {
+		$q .= $cond;
+	}
+
+	return $q;
+
+}

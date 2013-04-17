@@ -8,10 +8,6 @@
 				<?= form_input($k, $v) ?>
 			<?php endforeach; ?>
 
-			<script>
-			$('input[name=num]').attr('disabled', 'disabled');
-			</script>
-
 			<div class="form-actions">
 				<input type="submit" class="btn">
 				<input type="reset" class="btn btn-danger">

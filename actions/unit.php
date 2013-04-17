@@ -101,7 +101,6 @@ function add() {
 					session_set_flash('Il y a déjà une unité de fabrication à cette adresse...', 'warning');
 				} else {
 					$sql = sql_insert($_POST, 'unite_fabrication');
-					var_dump($sql); die();
 					if(mysql_query($sql)) {
 						session_set_flash('Unité de fabrication ajoutée...');
 					} else {
@@ -139,13 +138,50 @@ function del($params) {
 
 function edit($params) {
 	kick();
+
+	$champs = array(
+		'num', 'nom',
+		'capaciteMax',
+		'adresse', 'ville',
+		'cp'
+	);
+
 	mysql_auto_connect();
 
 	/* Traitement du post */
+	$errors = array();
 	if(!empty($_POST)) {
-		/*
-			TODO : traitement du post
-		 */
+		if(array_keys($_POST) == $champs) {
+
+			if(strlen($_POST['nom']) > 255 || strlen($_POST['nom']) < 3) {
+				$errors['nom'] = 'Le nom doit comporter 3 à 255 caractères';
+			}
+			if(strlen($_POST['adresse']) > 255 || strlen($_POST['adresse']) < 3) {
+				$errors['adresse'] = 'L\'adresse doit comporter 3 à 255 caractères';
+			}
+			if(strlen($_POST['ville']) > 255 || strlen($_POST['ville']) < 2) {
+				$errors['ville'] = 'La ville doit comporter 2 à 255 caractères';
+			}
+			if(!is_numeric($_POST['capaciteMax'])) {
+				$errors['capaciteMax'] = 'La capacité maximale doit être une valeur entière';
+			}
+			if(!preg_match('/[1-9][0-9]{3}/', $_POST['cp'])) {
+				$errors['cp'] = 'Le code postal doit être un nombre à 4 chiffres';
+			}
+
+			if(empty($errors)) {
+				$sql = sql_update($_POST, 'unite_fabrication', array('num' => $_POST['num']));
+				$r = mysql_query($sql);
+				if($r) {
+					session_set_flash('Unité bien modifiée...');
+				} else {
+					session_set_flash('Erreur interne !', 'error');
+				}
+			}
+
+		} else {
+			session_set_flash('Mauvais formulaire', 'error');
+		}
 	}
 
 	/* Récupération des infos de l'unité */
@@ -165,9 +201,14 @@ function edit($params) {
 		$post[$k]['value'] = $v;
 		$post[$k]['label'] = ucfirst($k);
 		if($k == 'num') {
-			$post[$k]['disabled'] = 'disabled';
+			$post[$k]['readonly'] = 'true';
+			$post[$k]['class'] = 'disabled';
 		} elseif($k == 'capaciteMax') {
 			$post[$k]['label'] = 'Capacité Maximale';
+		}
+		if(isset($errors[$k])) {
+			$post[$k]['help'] = $errors[$k];
+			$post[$k]['state'] = 'warning';
 		}
 	}
 
