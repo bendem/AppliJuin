@@ -31,3 +31,11 @@ function form_input($name, array $options = array()) {
 
 	return $html;
 }
+
+function form_select() {
+	return '<select></select>';
+}
+
+function form_radio() {
+	return '<input type="radio">';
+}
