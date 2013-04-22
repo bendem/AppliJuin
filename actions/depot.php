@@ -109,12 +109,10 @@ function add() {
 			} else {
 				$_POST['matiereDangereuse'] = ($_POST['matiereDangereuse'] == 'on');
 			}
-			var_dump($_POST);
 
 			if(empty($errors)) {
 				mysql_auto_connect();
-				$_POST['responsable'] = $post['responsable']['value'][$_POST['responsable']];
-				var_dump($_POST);
+				$_POST['responsable'] = $post['responsable']['values'][$_POST['responsable']];
 				$sql = sql_insert($_POST, 'depot');
 				if(mysql_query($sql)) {
 					session_set_flash('Dépôt ajouté...');
