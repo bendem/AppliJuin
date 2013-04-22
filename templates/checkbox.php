@@ -4,7 +4,7 @@
 	<?php endif; ?>
 	<div class="controls">
 		<input type="hidden" name="<?= $name ?>" value="off">
-		<input type="checkbox" name="<?= $name ?>" id="<?= isset($specOptions['id']) ? $specOptions['id'] : 'form_' . $name ?>" <?php foreach($options as $k => $v) echo $k . '="' . $v . '"'; ?>>
+		<input type="checkbox" name="<?= $name ?>" id="<?= isset($specOptions['id']) ? $specOptions['id'] : 'form_' . $name ?>" <?= (isset($specOptions['checked'])) ? 'checked' : '' ?> <?php foreach($options as $k => $v) echo $k . '="' . $v . '"'; ?>>
 		<?php if(isset($specOptions['help'])): ?>
 			<span class="help-inline">
 				<?= $specOptions['help'] ?>

@@ -97,7 +97,8 @@ function form_checkbox($name, array $options = array()) {
 		'state',
 		'id',
 		'label',
-		'values'
+		'checked',
+		'value'
 	);
 
 	// on enlève les attributs spéciaux du tableau d'options
