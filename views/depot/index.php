@@ -19,7 +19,8 @@
 					<th>Adresse</th>
 					<th>CP</th>
 					<th>Ville</th>
-					<th>Capacité maximale</th>
+					<th>Capacité de stockage</th>
+					<th>Matière dangereuse</th>
 					<?php if(is_connected()): ?>
 						<th>Actions</th>
 					<?php endif; ?>
@@ -40,10 +41,13 @@
 						<td><?= $v['adresse'] ?></td>
 						<td><?= $v['ville'] ?></td>
 						<td><?= $v['cp'] ?></td>
-						<td><?= $v['capaciteMax'] ?></td>
+						<td><?= $v['capaciteStockage'] ?></td>
+						<td>
+							<?= ($v['matiereDangereuse']) ? 'oui' : 'non' ?>
+						</td>
 						<?php if(is_connected()): ?>
 							<td>
-								<a href="<?= url(array('action' => 'unit', 'view' => 'edit', 'params' => array($v['nom'], $v['num']))) ?>" class="btn primary">
+								<a href="<?= url(array('action' => 'depot', 'view' => 'edit', 'params' => array($v['nom'], $v['num']))) ?>" class="btn primary">
 									<span class="icon-edit"></span>
 								</a>
 								<a href="#" class="btn btn-danger" data-content="<?php printf($del_confirm, $v['nom'], $v['num']) ?>" data-html="true" data-placement="bottom" data-text="Vraiment sur ?" data-trigger="click" data-toggle="popover" data-title="Confirmation">
