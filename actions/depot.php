@@ -150,14 +150,70 @@ function del($params) {
 function edit($params) {
 	kick();
 
-	$champs = array();
+	$champs = array(
+		'num' => array(
+			'label' => 'Numéro'
+		),
+		'nom' => array(
+			'label' => 'Nom'
+		),
+		'adresse' => array(
+			'label' => 'Adresse'
+		),
+		'ville' => array(
+			'label' => 'Ville'
+		),
+		'cp' => array(
+			'label' => 'Code Postal'
+		),
+		'capaciteStockage' => array(
+			'label' => 'Capacité de stockage'
+		),
+		'responsable' => array(
+			'type' => 'select',
+			'label' => 'Responsable',
+			'values' => array(
+				'XA', 'GT', 'LP', 'RS', 'TT'
+			)
+		),
+		'matiereDangereuse' => array(
+			'label' => 'Matière dangereuse',
+			'type' => 'checkbox'
+		)
+	);
 
 	mysql_auto_connect();
 
 	/* Traitement du post */
 	$errors = array();
 	if(!empty($_POST)) {
-		if(array_keys($_POST) == $champs) {
+		if(array_keys($_POST) == array_keys($champs)) {
+			/*
+				Gestion des erreurs
+			 */
+			if(strlen($_POST['nom']) > 255 || strlen($_POST['nom']) < 3) {
+				$errors['nom'] = 'Le nom doit comporter 3 à 255 caractères';
+			}
+			if(strlen($_POST['adresse']) > 255 || strlen($_POST['adresse']) < 3) {
+				$errors['adresse'] = 'L\'adresse doit comporter 3 à 255 caractères';
+			}
+			if(strlen($_POST['ville']) > 255 || strlen($_POST['ville']) < 2) {
+				$errors['ville'] = 'La ville doit comporter 2 à 255 caractères';
+			}
+			if(!preg_match('/[1-9][0-9]{3}/', $_POST['cp'])) {
+				$errors['cp'] = 'Le code postal doit être un nombre à 4 chiffres';
+			}
+			if(!is_numeric($_POST['capaciteStockage'])) {
+				$errors['capaciteStockage'] = 'La capacité de stockage doit être un nombre';
+			}
+			if(!in_array($_POST['responsable'], array_keys($champs['responsable']['values']))) {
+				$errors['responsable'] = 'Le responsable doit faire partie de la liste';
+			}
+			if(!in_array($_POST['matiereDangereuse'], array('on', 'off'))) {
+				$errors['matiereDangereuse'] = 'Vous ne pouvez pas choisir votre valeur';
+			} else {
+				$_POST['matiereDangereuse'] = ($_POST['matiereDangereuse'] == 'on');
+			}
 
 			if(empty($errors)) {
 				$sql = sql_update($_POST, 'depot', array('num' => $_POST['num']));
@@ -186,21 +242,27 @@ function edit($params) {
 		)));
 	}
 
-	$post = array();
 	foreach ($data as $k => $v) {
-		$post[$k]['value'] = $v;
-		$post[$k]['label'] = ucfirst($k);
+		$champs[$k]['value'] = $v;
+		$champs[$k]['label'] = ucfirst($k);
 		if($k == 'num') {
-			$post[$k]['readonly'] = 'true';
-			$post[$k]['class'] = 'disabled';
+			$champs[$k]['readonly'] = 'true';
+			$champs[$k]['class'] = 'disabled';
+		} elseif ($k == 'responsable') {
+			$champs[$k]['type'] = 'select';
+		} elseif ($k == 'matiereDangereuse') {
+			$champs[$k]['type'] = 'checkbox';
+			if($v) {
+				$champs[$k]['checked'] = true;
+			}
 		}
 		if(isset($errors[$k])) {
-			$post[$k]['help'] = $errors[$k];
-			$post[$k]['state'] = 'warning';
+			$champs[$k]['help'] = $errors[$k];
+			$champs[$k]['state'] = 'warning';
 		}
 	}
 
 	return array(
-		'data' => $post
+		'data' => $champs
 	);
 }
