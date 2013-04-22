@@ -12,8 +12,8 @@
 					unset($v['type']);
 					if($type == 'select') {
 						echo form_select($k, $v);
-					} elseif($type == 'radio') {
-						echo form_radio($k, $v);
+					} elseif($type == 'checkbox') {
+						echo form_checkbox($k, $v);
 					}
 				} else {
 					echo form_input($k, $v);

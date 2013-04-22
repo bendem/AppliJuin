@@ -73,9 +73,9 @@ function add() {
 				'XA', 'GT', 'LP', 'RS', 'TT'
 			)
 		),
-		'matiereDangereurse' => array(
+		'matiereDangereuse' => array(
 			'label' => 'Matière dangereuse',
-			'type' => 'radio'
+			'type' => 'checkbox'
 		)
 	);
 
@@ -98,15 +98,23 @@ function add() {
 			if(!preg_match('/[1-9][0-9]{3}/', $_POST['cp'])) {
 				$errors['cp'] = 'Le code postal doit être un nombre à 4 chiffres';
 			}
-
+			if(!is_numeric($_POST['capaciteStockage'])) {
+				$errors['capaciteStockage'] = 'La capacité de stockage doit être un nombre';
+			}
+			if(!in_array($_POST['responsable'], array_keys($post['responsable']['values']))) {
+				$errors['responsable'] = 'Le responsable doit faire partie de la liste';
+			}
+			if(!in_array($_POST['matiereDangereuse'], array('on', 'off'))) {
+				$errors['matiereDangereuse'] = 'Vous ne pouvez pas choisir votre valeur';
+			} else {
+				$_POST['matiereDangereuse'] = ($_POST['matiereDangereuse'] == 'on');
+			}
 			var_dump($_POST);
-			var_dump($errors);
-			die();
 
 			if(empty($errors)) {
 				mysql_auto_connect();
-				$tmp = $_POST;
-				$r = mysql_query(sql_select('*', 'depot', $tmp));
+				$_POST['responsable'] = $post['responsable']['value'][$_POST['responsable']];
+				var_dump($_POST);
 				$sql = sql_insert($_POST, 'depot');
 				if(mysql_query($sql)) {
 					session_set_flash('Dépôt ajouté...');
