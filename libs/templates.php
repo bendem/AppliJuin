@@ -32,7 +32,7 @@ function nav_top() {
 	$nav = array();
 
 	// Contient partie principale de la navigation
-	if(in_array($req['action'], $add)) {
+	if(in_array($req['action'], $add) && is_connected()) {
 		$nav = array(
 			url(array(
 				'action' => $req['action'],
@@ -87,6 +87,29 @@ function nav_sidebar() {
 			'action' => 'depot'
 		)) => 'dépôts'
 	);
+
+	if(is_connected()) {
+		$navAccount = array(
+			url(array(
+				'action' => 'user',
+			)) => 'profil',
+			url(array(
+				'action' => 'user',
+				'view' => 'disconnect'
+			)) => 'déconnexion'
+		);
+	} else {
+		$navAccount = array(
+			url(array(
+				'action' => 'user',
+				'view' => 'login'
+			)) => 'connexion',
+			url(array(
+				'action' => 'user',
+				'view' => 'register'
+			)) => 'inscription'
+		);
+	}
 
 	ob_start();
 	require TEMPLATES_DIR . DS . 'nav_sidebar.php';
