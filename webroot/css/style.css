@@ -34,3 +34,7 @@ a.muted:hover {
 	padding-bottom: 7px;
 	margin-top: 5px;
 }
+
+.form-actions {
+	border-radius: 0 0 3px 3px;
+}
