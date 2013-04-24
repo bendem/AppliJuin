@@ -143,8 +143,31 @@ function add() {
 }
 
 function del($params) {
+	/**
+	 * Penser à supprimer les produits correspondants !!!
+	 */
 	kick();
-	var_dump($params);
+	if(is_string($params[0]) && is_numeric($params[1])) {
+		$nom = $params[0];
+		$id = (int) $params[1];
+	} else {
+		session_set_flash('Problème de paramètres pour la suppression', 'error');
+		redirect(url(array(
+			'action' => 'depot'
+		)));
+	}
+
+
+	mysql_auto_connect();
+	$q = 'DELETE FROM depot WHERE num=' . $id;
+	if(mysql_query($q)) {
+		session_set_flash('Dépôt avec succès', 'success');
+	} else {
+		session_set_flash('Erreur interne', 'error');
+	}
+	redirect(url(array(
+		'action' => 'depot'
+	)));
 }
 
 function edit($params) {
