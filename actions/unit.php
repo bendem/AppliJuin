@@ -3,31 +3,28 @@
 function index($fla = null) {
 	mysql_auto_connect();
 
-	$sql = sql_select('*', 'unite_fabrication');
+	// On récupère les premières lettres de chaque unités
+	$sql = sql_select('DISTINCT LEFT(nom, 1)', 'unite_fabrication');
 	$r = mysql_query($sql);
-	$data = mysql_fetch_assoc_all($r);
+	$data = mysql_fetch_all($r, MYSQL_NUM);
 
-	// Premières lettres définies
 	$enabled = array();
 	foreach ($data as $v) {
-		$fl = strtoupper(substr($v['nom'], 0, 1));
-		if(!in_array($fl, $enabled)) {
-			$enabled[] = $fl;
-		}
+		$enabled[] = strtoupper($v[0]);
 	}
 
+	// On établit une condition pour sélectionner les unités nécessaires
+	$cond = false;
 	if($fla) {
-		$condSeparator = 'like';
-		$sql = sql_select(
-			'*',
-			'unite_fabrication',
-			'nom like "' . mysql_real_escape_string($fla[0]) . '%"',
-			'like'
-		);
-
-		$r = mysql_query($sql);
-		$data = mysql_fetch_assoc_all($r);
+		$cond = 'nom like "' . mysql_real_escape_string($fla[0]) . '%"';
 	}
+
+	$r = mysql_query(sql_select(
+		'*',
+		'unite_fabrication',
+		$cond
+	));
+	$data = mysql_fetch_all($r);
 
 
 	$alph = array();
@@ -97,7 +94,7 @@ function add() {
 				unset($tmp['capaciteMax']);
 				unset($tmp['nom']);
 				$r = mysql_query(sql_select('*', 'unite_fabrication', $tmp));
-				if(mysql_fetch_assoc_all($r)) {
+				if(mysql_fetch_all($r)) {
 					session_set_flash('Il y a déjà une unité de fabrication à cette adresse...', 'warning');
 				} else {
 					$sql = sql_insert($_POST, 'unite_fabrication');

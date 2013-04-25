@@ -5,7 +5,7 @@ function index($fla = null) {
 
 	$sql = sql_select('*', 'depot');
 	$r = mysql_query($sql);
-	$data = mysql_fetch_assoc_all($r);
+	$data = mysql_fetch_all($r);
 
 	// Premières lettres définies
 	$enabled = array();
@@ -26,7 +26,7 @@ function index($fla = null) {
 		);
 
 		$r = mysql_query($sql);
-		$data = mysql_fetch_assoc_all($r);
+		$data = mysql_fetch_all($r);
 	}
 
 

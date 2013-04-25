@@ -1,8 +1,8 @@
 <?php
 
-function mysql_fetch_assoc_all($r) {
+function mysql_fetch_all($r, $result_type = MYSQL_ASSOC) {
 	$tmp = array();
-	while($data = mysql_fetch_assoc($r)) {
+	while($data = mysql_fetch_array($r, $result_type)) {
 		$tmp[] = $data;
 	}
 
