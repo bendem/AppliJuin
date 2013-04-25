@@ -39,23 +39,10 @@ function nav_top() {
 				'view'	 => 'add'
 			)) => 'ajouter'
 		);
-
 	}
 
 	// Contient le menu de droite
-	if(!session_read('user')) {
-		$right_text = 'compte';
-		$right = array(
-			url(array(
-				'view'   => 'register',
-				'action' => 'user'
-			)) => 'inscription',
-			url(array(
-				'view'   => 'login',
-				'action' => 'user'
-			)) => 'connexion'
-		);
-	} else {
+	if(is_connected()) {
 		$right_text = session_read('user')['login'];
 		$right = array(
 			url(array(
@@ -66,6 +53,18 @@ function nav_top() {
 				'view'   => 'disconnect',
 				'action' => 'user'
 			)) => 'déconnexion'
+		);
+	} else {
+		$right_text = 'compte';
+		$right = array(
+			url(array(
+				'view'   => 'register',
+				'action' => 'user'
+			)) => 'inscription',
+			url(array(
+				'view'   => 'login',
+				'action' => 'user'
+			)) => 'connexion'
 		);
 	}
 
@@ -85,7 +84,13 @@ function nav_sidebar() {
 		)) => 'unités de fabrication',
 		url(array(
 			'action' => 'depot'
-		)) => 'dépôts'
+		)) => 'dépôts',
+		url(array(
+			'action' => 'product'
+		)) => 'produits',
+		url(array(
+			'action' => 'command'
+		)) => 'commandes'
 	);
 
 	if(is_connected()) {
