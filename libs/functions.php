@@ -49,7 +49,6 @@ function url(array $req = array()) {
 		}
 	}
 	unset($req['params']);
-	//var_dump($req);
 
 	if($req['action'] == INDEX_ACTION) {
 		unset($req['action']);
@@ -62,7 +61,7 @@ function url(array $req = array()) {
 		$tmp[] = $k . '=' . $v;
 	}
 
-	$url = /*'index.php' . */((empty($tmp)) ? '' : '?' . implode('&', $tmp));
+	$url = ((empty($tmp)) ? '' : '?' . implode('&', $tmp));
 	return URL_ROOT . '/' . $url;
 }
 
@@ -94,7 +93,7 @@ function is_active($url, $strict = false) {
 		}
 	}
 
-	//return $res;
+	return false;
 }
 
 /**
@@ -120,12 +119,12 @@ function redirect($url, $code = null) {
 
 /**
  * Rejette les utilisateurs de la page courante
+ * (en mode debug, génère un warning et empêche la redirection)
  * @param boolean $connected Si vrai, renvoie vers la page d'accueil,
  *							 Si faux, renvoie vers la page de connexion
  */
 function kick($connected = false) {
-
-	if(session_read('user') == $connected) {
+	if(is_connected() == $connected) {
 		if(DEBUG) {
 			session_set_flash('DEBUG : Redirection empêchée (pb de connexion)', 'warning');
 			return;

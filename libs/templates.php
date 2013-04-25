@@ -15,9 +15,8 @@ function breadcrumb(array $req) {
 }
 
 /**
- * Retourne la partie navigation du site
- *
- * @return string Code de la navigation
+ * Génère le code html de la topbar
+ * @return string Code de la topbar
  */
 function nav_top() {
 	$brand = array(url() => 'Appli Juin');
@@ -74,7 +73,10 @@ function nav_top() {
 	return $html;
 }
 
-
+/**
+ * Génère le code html de la sidebar
+ * @return string Code html de la sidebar
+ */
 function nav_sidebar() {
 	// Contient partie principale de la navigation
 	$nav = array(

@@ -58,6 +58,10 @@ function session_set_flash($msg, $type = 'success') {
 	session_write($flash, 'flash');
 }
 
+/**
+ * Affiche les notifications contenues dans la session
+ * @return string Code html
+ */
 function session_flash() {
 	$html = '';
 	foreach (session_read('flash') as $v) {

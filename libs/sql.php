@@ -64,6 +64,14 @@ function sql_insert(array $data, $table, $force_quotes = false) {
 	return $q;
 }
 
+/**
+ * Génère une requête SQL de type update
+ * @param  array  $data Données à mettre à jour
+ * @param  string $table Nom de la table
+ * @param  string/array $cond Condition de la misé à jour
+ * @param  boolean $force_quotes Force les quotes autour des valeurs numériques
+ * @return string Requête SQL
+ */
 function sql_update(array $data, $table, $cond, $force_quotes = false) {
 	$q = 'UPDATE ' . $table . ' SET ';
 	$d = array();

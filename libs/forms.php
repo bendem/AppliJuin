@@ -64,6 +64,12 @@ function form_select($name, array $options = array()) {
 	return ob_get_clean();
 }
 
+/**
+ * Génère un input de type radio
+ * @param  string $name    Nom de l'input
+ * @param  array  $options Options de l'input
+ * @return string Code html de l'input
+ */
 function form_radio($name, array $options = array()) {
 	// attributs non applicables sur le tag input
 	$exceptions = array(
@@ -82,14 +88,18 @@ function form_radio($name, array $options = array()) {
 			unset($options[$v]);
 		}
 	}
-	//$options = array_diff_assoc($options, $specOptions);
 
 	ob_start();
 	require TEMPLATES_DIR . DS . 'radio.php';
-
 	return ob_get_clean();
 }
 
+/**
+ * Génère un input de type checkbox
+ * @param  string $name    Nom de  l'input
+ * @param  array  $options Options de l'input
+ * @return string Code html du checkbox
+ */
 function form_checkbox($name, array $options = array()) {
 	// attributs non applicables sur le tag input
 	$exceptions = array(
@@ -109,10 +119,8 @@ function form_checkbox($name, array $options = array()) {
 			unset($options[$v]);
 		}
 	}
-	//$options = array_diff_assoc($options, $specOptions);
 
 	ob_start();
 	require TEMPLATES_DIR . DS . 'checkbox.php';
-
 	return ob_get_clean();
 }
