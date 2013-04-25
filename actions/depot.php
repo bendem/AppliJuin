@@ -3,32 +3,28 @@
 function index($fla = null) {
 	mysql_auto_connect();
 
-	$sql = sql_select('*', 'depot');
+	// On récupère les premières lettres de chaque dépôt
+	$sql = sql_select('DISTINCT LEFT(nom, 1)', 'depot');
 	$r = mysql_query($sql);
-	$data = mysql_fetch_all($r);
+	$data = mysql_fetch_all($r, MYSQL_NUM);
 
-	// Premières lettres définies
 	$enabled = array();
 	foreach ($data as $v) {
-		$fl = strtoupper(substr($v['nom'], 0, 1));
-		if(!in_array($fl, $enabled)) {
-			$enabled[] = $fl;
-		}
+		$enabled[] = strtoupper($v[0]);
 	}
 
+	// On établit une condition pour sélectionner les unités nécessaires
+	$cond = false;
 	if($fla) {
-		$condSeparator = 'like';
-		$sql = sql_select(
-			'*',
-			'depot',
-			'nom like "' . mysql_real_escape_string($fla[0]) . '%"',
-			'like'
-		);
-
-		$r = mysql_query($sql);
-		$data = mysql_fetch_all($r);
+		$cond = 'nom like "' . mysql_real_escape_string($fla[0]) . '%"';
 	}
 
+	$r = mysql_query(sql_select(
+		'*',
+		'depot',
+		$cond
+	));
+	$data = mysql_fetch_all($r);
 
 	$alph = array();
 	for ($i=0; $i < 26; $i++) {
