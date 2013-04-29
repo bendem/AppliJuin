@@ -15,6 +15,7 @@
 					<th>Date</th>
 					<th>Unité</th>
 					<th>Dépôt</th>
+					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -23,6 +24,9 @@
 					<td>lol</td>
 					<td>lol</td>
 					<td>lol</td>
+					<td>
+						<?= actions($req['action'], array('', ''), $del_confirm) ?>
+					</td>
 				</tr>
 			</tbody>
 		</table>

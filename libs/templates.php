@@ -26,7 +26,8 @@ function nav_top() {
 	$add = array(
 		'unit',
 		'depot',
-		'product'
+		'product',
+		'command'
 	);
 
 	$nav = array();

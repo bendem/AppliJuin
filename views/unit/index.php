@@ -49,6 +49,14 @@
 						<td><?= $v['cp'] ?></td>
 						<td><?= $v['capaciteMax'] ?></td>
 						<td>
+							<a href="<?= url(array(
+								'action' => 'command',
+								'view' => 'add',
+								'params' => array(
+									1, $v['nom'], $v['num'] // le 1 sert à préciser que c'est une unité de fabrication
+								))) ?>" class="btn" data-toggle="tooltip" data-title="Effectuer une commande">
+								<span class="icon-globe"></span>
+							</a>
 							<?= actions($req['action'], array($v['nom'], $v['num']), $del_confirm) ?>
 						</td>
 					</tr>
