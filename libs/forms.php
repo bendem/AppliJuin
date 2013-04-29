@@ -57,6 +57,9 @@ function form_select($name, array $options = array()) {
 			unset($options[$v]);
 		}
 	}
+	if(!isset($specOptions['value'])) {
+		$specOptions['value'] = current(array_keys($specOptions['values']));
+	}
 	//$options = array_diff_assoc($options, $specOptions);
 
 	ob_start();
