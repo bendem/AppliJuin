@@ -15,7 +15,7 @@ function validate_depot($post, $champs) {
 	if(!preg_match('/[1-9][0-9]{3}/', $post['cp'])) {
 		$errors['cp'] = 'Le code postal doit être un nombre à 4 chiffres (>=1000)';
 	}
-	if(!is_numeric($post['capaciteStockage'])) {
+	if(!is_numeric($post['capaciteStockage']) || $post['capaciteStockage'] < 1) {
 		$errors['capaciteStockage'] = 'La capacité de stockage doit être un nombre';
 	}
 	if(!in_array($post['responsable'], array_keys($champs['responsable']['values']))) {
@@ -40,7 +40,7 @@ function validate_unit($post) {
 	if(strlen($_POST['ville']) > 255 || strlen($_POST['ville']) < 2) {
 		$errors['ville'] = 'La ville doit comporter 2 à 255 caractères';
 	}
-	if(!is_numeric($_POST['capaciteMax'])) {
+	if(!is_numeric($_POST['capaciteMax']) || $post['capaciteMax'] < 1) {
 		$errors['capaciteMax'] = 'La capacité maximale doit être une valeur entière';
 	}
 	if(!preg_match('/[1-9][0-9]{3}/', $_POST['cp'])) {
@@ -59,7 +59,7 @@ function validate_product($post, $champs) {
 	if(strlen($_POST['uniteMesure']) > 10 || strlen($_POST['uniteMesure']) < 1) {
 		$errors['uniteMesure'] = 'L\'unité de mesure doit comporter 1 à 100 caractères';
 	}
-	if(!is_numeric($_POST['prix'])) {
+	if(!is_numeric($_POST['prix']) || $post['prix'] < 1) {
 		$errors['prix'] = 'Le prix doit être une valeur numérique';
 	}
 	if(!in_array($post['type'], array_keys($champs['type']['values']))) {

@@ -13,21 +13,25 @@
 				<tr>
 					<th>#</th>
 					<th>Date</th>
-					<th>Unité</th>
-					<th>Dépôt</th>
+					<th>Numéro de l'unité</th>
+					<th>Nom de l'unité</th>
+					<th>Numéro de dépôt</th>
+					<th>Nom du dépôt</th>
 					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>lol</td>
-					<td>lol</td>
-					<td>lol</td>
-					<td>lol</td>
-					<td>
-						<?= actions($req['action'], array('', ''), $del_confirm) ?>
-					</td>
-				</tr>
+				<?php foreach($data as $v): ?>
+					<tr>
+						<td><?= $v['num'] ?></td>
+						<td><?= date('d-m-y à H:i:s', strtotime($v['dateCommande'])) ?></td>
+						<td><?= $v['numUnite'] ?></td>
+						<td><?= $v['nom_unite'] ?></td>
+						<td><?= $v['numDepot'] ?></td>
+						<td><?= $v['nom_depot'] ?></td>
+						<td><?= actions($req['action'], array('', ''), $del_confirm) ?></td>
+					</tr>
+				<?php endforeach; ?>
 			</tbody>
 		</table>
 	</div>

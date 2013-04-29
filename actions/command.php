@@ -3,7 +3,12 @@
 function index() {
 	mysql_auto_connect();
 
-	$r = mysql_query(sql_select('*', 'produit'));
+	$q = 'SELECT commande.*, unite_fabrication.nom as nom_unite, depot.nom as nom_depot
+		FROM commande
+		INNER JOIN unite_fabrication ON(commande.numUnite = unite_fabrication.num)
+		INNER JOIN depot ON (commande.numDepot = depot.num)
+		ORDER BY dateCommande DESC';
+	$r = mysql_query($q);
 	$data = mysql_fetch_all($r);
 
 	return array(
