@@ -189,12 +189,28 @@ function boum() {
 	?>
 	<script>
 	jQuery(function($) {
+		var forward = true;
+		var default_size = $('pre span').width();
+
 		function move() {
-			$('pre span').each(function(k, v)
-				{ $(v).prepend(' '); });
-			if($('pre').width() >= $('pre span').width() + 15)
-				{ setTimeout(move, 110); }
+			if(forward) {
+				$('pre span').each(function(k, v) {
+					$(v).prepend(' ');
+				});
+				if($('pre').width() <= $('pre span').width() + 15) {
+					forward = false;
+				}
+			} else {
+				$('pre span').each(function(k, v) {
+					$(v).html($(v).html().substr(1, $(v).html().length));
+				});
+				if($('pre span').width() <= default_size) {
+					forward = true;
+				}
+			}
+			setTimeout(move, 110);
 		}
+
 		move();
 	})
 	</script>

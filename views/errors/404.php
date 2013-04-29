@@ -19,17 +19,14 @@ $nyan = $nyan[rand(0, sizeof($nyan) - 1)];
 	<div class="span12">
 		<h2>La page n'a pas été trouvée...</h2>
 		<p>
-			En la cherchant, nous avons trouvé ceci :
+			En la cherchant, nous avons trouvé <em>ceci</em> :
 		</p>
-		<p>
+		<div>
 			<?php boum(); ?>
-		</p>
-		<p>
-			<audio autoplay loop>
-				<source src="<?php echo webroot('sounds/ogg/' . $nyan . '.ogg') ?>" type="audio/ogg">
-				<source src="<?php echo webroot('sounds/mp3/' . $nyan . '.mp3') ?>" type="audio/mpeg">
-				Votre navigateur ne supporte pas le son...
-			</audio>
-		</p>
+		</div>
+		<audio autoplay loop>
+			<source src="<?php echo webroot('sounds/mp3/' . $nyan . '.mp3') ?>" type="audio/mpeg">
+			Votre navigateur ne supporte pas le son...
+		</audio>
 	</div>
 </div>
