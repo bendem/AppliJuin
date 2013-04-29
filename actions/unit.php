@@ -72,21 +72,7 @@ function add() {
 			/*
 				Gestion des erreurs
 			 */
-			if(strlen($_POST['nom']) > 255 || strlen($_POST['nom']) < 3) {
-				$errors['nom'] = 'Le nom doit comporter 3 à 255 caractères';
-			}
-			if(strlen($_POST['adresse']) > 255 || strlen($_POST['adresse']) < 3) {
-				$errors['adresse'] = 'L\'adresse doit comporter 3 à 255 caractères';
-			}
-			if(strlen($_POST['ville']) > 255 || strlen($_POST['ville']) < 2) {
-				$errors['ville'] = 'La ville doit comporter 2 à 255 caractères';
-			}
-			if(!is_numeric($_POST['capaciteMax'])) {
-				$errors['capaciteMax'] = 'La capacité maximale doit être une valeur entière';
-			}
-			if(!preg_match('/[1-9][0-9]{3}/', $_POST['cp'])) {
-				$errors['cp'] = 'Le code postal doit être un nombre à 4 chiffres';
-			}
+			$errors = validate_unit($_POST);
 
 			if(empty($errors)) {
 				mysql_auto_connect();
@@ -173,21 +159,7 @@ function edit($params) {
 	if(!empty($_POST)) {
 		if(array_keys($_POST) == $champs) {
 
-			if(strlen($_POST['nom']) > 255 || strlen($_POST['nom']) < 3) {
-				$errors['nom'] = 'Le nom doit comporter 3 à 255 caractères';
-			}
-			if(strlen($_POST['adresse']) > 255 || strlen($_POST['adresse']) < 3) {
-				$errors['adresse'] = 'L\'adresse doit comporter 3 à 255 caractères';
-			}
-			if(strlen($_POST['ville']) > 255 || strlen($_POST['ville']) < 2) {
-				$errors['ville'] = 'La ville doit comporter 2 à 255 caractères';
-			}
-			if(!is_numeric($_POST['capaciteMax'])) {
-				$errors['capaciteMax'] = 'La capacité maximale doit être une valeur entière';
-			}
-			if(!preg_match('/[1-9][0-9]{3}/', $_POST['cp'])) {
-				$errors['cp'] = 'Le code postal doit être un nombre à 4 chiffres';
-			}
+			$errors = validate_unit($_POST);
 
 			if(empty($errors)) {
 				$sql = sql_update($_POST, 'unite_fabrication', array('num' => $_POST['num']));
