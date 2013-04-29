@@ -1,7 +1,13 @@
 jQuery(function($) {
 
-	$('[data-toggle="tooltip"]').tooltip();
-	$('[data-toggle="popover"]').popover();
+	$('[data-toggle="tooltip"]').tooltip({
+		placement : 'bottom',
+		trigger : 'hover'
+	});
+	$('[data-toggle="popover"]').popover({
+		placement : 'bottom',
+		trigger : 'click'
+	});
 
 	$('.confirm').click(function() {
 		var	text;

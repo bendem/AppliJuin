@@ -20,9 +20,7 @@
 					<th>Prix</th>
 					<th>Type</th>
 					<th>Matière dangereuse</th>
-					<?php if(is_connected()): ?>
-						<th>Actions</th>
-					<?php endif; ?>
+					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -43,16 +41,9 @@
 						<td>
 							<?= ($v['categorie']) ? 'oui' : 'non' ?>
 						</td>
-						<?php if(is_connected()): ?>
-							<td>
-								<a href="<?= url(array('action' => 'product', 'view' => 'edit', 'params' => array($v['nom'], $v['num']))) ?>" class="btn primary">
-									<span class="icon-edit"></span>
-								</a>
-								<a href="#" class="btn btn-danger" data-content="<?php printf($del_confirm, $v['nom'], $v['num']) ?>" data-html="true" data-placement="bottom" data-text="Vraiment sur ?" data-trigger="click" data-toggle="popover" data-title="Confirmation">
-									<span class="icon-remove"></span>
-								</a>
-							</td>
-						<?php endif; ?>
+						<td>
+							<?= actions($req['action'], array($v['nom'], $v['num']), $del_confirm) ?>
+						</td>
 					</tr>
 				<?php endforeach; ?>
 			</tbody>

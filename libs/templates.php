@@ -124,3 +124,9 @@ function nav_sidebar() {
 	$html = ob_get_clean();
 	return $html;
 }
+
+function actions($action, $params, $del_confirm_text) {
+	ob_start();
+	require TEMPLATES_DIR . DS . 'actions.php';
+	return ob_get_clean();
+}

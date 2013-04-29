@@ -285,3 +285,15 @@ function edit($params) {
 		'data' => $champs
 	);
 }
+
+function info($params) {
+	if(is_numeric($params[1])) {
+		$id = $params[1];
+		mysql_auto_connect();
+		$data = mysql_fetch_assoc(mysql_query(sql_select('*', 'depot', array('num' => $id))));
+	}
+	return array(
+		'nom' => ucfirst($params[0]),
+		'data' => $data
+	);
+}
