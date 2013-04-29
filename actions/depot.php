@@ -87,15 +87,19 @@ function add() {
 
 			$errors = validate_depot($_POST, $post);
 
+			mysql_auto_connect();
+			if(mysql_num_rows(mysql_query(sql_select('*', 'depot', array('nom' => $_POST['nom']))))) {
+				$errors['nom'] = "Nom déjà utilisé";
+			}
+
 			if(empty($errors)) {
 				$_POST['matiereDangereuse'] = ($_POST['matiereDangereuse'] == 'on');
 
-				mysql_auto_connect();
 				$sql = sql_insert($_POST, 'depot');
 				if(mysql_query($sql)) {
 					session_set_flash('Dépôt ajouté...');
 				} else {
-					session_set_flash("Erreur interne lors de l'ajout !", 'error');
+					session_set_flash("Erreur interne ($sql)", 'error');
 				}
 			} else {
 				session_set_flash('Il y a des erreurs dans le formulaire...', 'warning');
@@ -141,7 +145,7 @@ function del($params) {
 	if(mysql_query($q)) {
 		session_set_flash('Dépôt avec succès', 'success');
 	} else {
-		session_set_flash('Erreur interne', 'error');
+		session_set_flash('Erreur interne (' . $q . ')', 'error');
 	}
 	redirect(url(array(
 		'action' => 'depot'
@@ -205,7 +209,7 @@ function edit($params) {
 				if($r) {
 					session_set_flash('Dépôt bien modifié...');
 				} else {
-					session_set_flash('Erreur interne !', 'error');
+					session_set_flash('Erreur interne  (' . $sql . ') !', 'error');
 				}
 			}
 

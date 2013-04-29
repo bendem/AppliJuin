@@ -48,15 +48,15 @@ function add(array $params = null) {
 		}
 	}
 
-	$r = mysql_query(sql_select('num, nom', 'unite_fabrication'));
+	$r = mysql_query(sql_select('num, nom, cp', 'unite_fabrication'));
 	$units = array();
 	while ($d = mysql_fetch_assoc($r)) {
-		$units[$d['num']] = $d['nom'];
+		$units[$d['num']] = $d['nom'] . ' - ' . $d['cp'];
 	}
-	$r = mysql_query(sql_select('num, nom', 'depot'));
+	$r = mysql_query(sql_select('num, nom, cp', 'depot'));
 	$depots = array();
 	while ($d = mysql_fetch_assoc($r)) {
-		$depots[$d['num']] = $d['nom'];
+		$depots[$d['num']] = $d['nom'] . ' - ' . $d['cp'];
 	}
 
 	$champs = array(
