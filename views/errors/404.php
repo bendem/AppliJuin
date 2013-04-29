@@ -5,12 +5,11 @@ $nyan = array(
 	'america', 'balloon', 'daft',
 	'dub', 'elevator', 'fiesta',
 	'gb', 'j5', 'jamaicnyan',
-	'jazz', 'mexinyan',
-	'names', 'newyear', 'nyan',
+	'jazz', 'mexinyan', 'newyear',
 	'nyaninja', 'pikanyan', 'retro',
 	'sad', 'slomo', 'smurf',
 	'tacnayn', 'technyancolor', 'vday',
-	'wtf'
+	'nyan', 'wtf'
 );
 
 $nyan = $nyan[rand(0, sizeof($nyan) - 1)];
