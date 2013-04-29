@@ -45,7 +45,8 @@ function form_select($name, array $options = array()) {
 		'state',
 		'id',
 		'label',
-		'values'
+		'values',
+		'value'
 	);
 
 	// on enlève les attributs spéciaux du tableau d'options
