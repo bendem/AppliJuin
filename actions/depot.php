@@ -66,7 +66,7 @@ function add() {
 			'type' => 'select',
 			'label' => 'Responsable',
 			'values' => array(
-				'XA', 'GT', 'LP', 'RS', 'TT'
+				'', 'XA', 'GT', 'LP', 'RS', 'TT'
 			)
 		),
 		'matiereDangereuse' => array(
@@ -82,31 +82,11 @@ function add() {
 			/*
 				Gestion des erreurs
 			 */
-			if(strlen($_POST['nom']) > 255 || strlen($_POST['nom']) < 3) {
-				$errors['nom'] = 'Le nom doit comporter 3 à 255 caractères';
-			}
-			if(strlen($_POST['adresse']) > 255 || strlen($_POST['adresse']) < 3) {
-				$errors['adresse'] = 'L\'adresse doit comporter 3 à 255 caractères';
-			}
-			if(strlen($_POST['ville']) > 255 || strlen($_POST['ville']) < 2) {
-				$errors['ville'] = 'La ville doit comporter 2 à 255 caractères';
-			}
-			if(!preg_match('/[1-9][0-9]{3}/', $_POST['cp'])) {
-				$errors['cp'] = 'Le code postal doit être un nombre à 4 chiffres';
-			}
-			if(!is_numeric($_POST['capaciteStockage'])) {
-				$errors['capaciteStockage'] = 'La capacité de stockage doit être un nombre';
-			}
-			if(!in_array($_POST['responsable'], array_keys($post['responsable']['values']))) {
-				$errors['responsable'] = 'Le responsable doit faire partie de la liste';
-			}
-			if(!in_array($_POST['matiereDangereuse'], array('on', 'off'))) {
-				$errors['matiereDangereuse'] = 'Vous ne pouvez pas choisir votre valeur';
-			} else {
-				$_POST['matiereDangereuse'] = ($_POST['matiereDangereuse'] == 'on');
-			}
+			$errors = validate_depot($_POST, $post);
 
 			if(empty($errors)) {
+				$_POST['matiereDangereuse'] = ($_POST['matiereDangereuse'] == 'on');
+
 				mysql_auto_connect();
 				$_POST['responsable'] = $post['responsable']['values'][$_POST['responsable']];
 				$sql = sql_insert($_POST, 'depot');
@@ -192,7 +172,7 @@ function edit($params) {
 			'type' => 'select',
 			'label' => 'Responsable',
 			'values' => array(
-				'XA', 'GT', 'LP', 'RS', 'TT'
+				'', 'XA', 'GT', 'LP', 'RS', 'TT'
 			)
 		),
 		'matiereDangereuse' => array(
@@ -207,34 +187,12 @@ function edit($params) {
 	$errors = array();
 	if(!empty($_POST)) {
 		if(array_keys($_POST) == array_keys($champs)) {
-			/*
-				Gestion des erreurs
-			 */
-			if(strlen($_POST['nom']) > 255 || strlen($_POST['nom']) < 3) {
-				$errors['nom'] = 'Le nom doit comporter 3 à 255 caractères';
-			}
-			if(strlen($_POST['adresse']) > 255 || strlen($_POST['adresse']) < 3) {
-				$errors['adresse'] = 'L\'adresse doit comporter 3 à 255 caractères';
-			}
-			if(strlen($_POST['ville']) > 255 || strlen($_POST['ville']) < 2) {
-				$errors['ville'] = 'La ville doit comporter 2 à 255 caractères';
-			}
-			if(!preg_match('/[1-9][0-9]{3}/', $_POST['cp'])) {
-				$errors['cp'] = 'Le code postal doit être un nombre à 4 chiffres';
-			}
-			if(!is_numeric($_POST['capaciteStockage'])) {
-				$errors['capaciteStockage'] = 'La capacité de stockage doit être un nombre';
-			}
-			if(!in_array($_POST['responsable'], array_keys($champs['responsable']['values']))) {
-				$errors['responsable'] = 'Le responsable doit faire partie de la liste';
-			}
-			if(!in_array($_POST['matiereDangereuse'], array('on', 'off'))) {
-				$errors['matiereDangereuse'] = 'Vous ne pouvez pas choisir votre valeur';
-			} else {
-				$_POST['matiereDangereuse'] = ($_POST['matiereDangereuse'] == 'on');
-			}
+
+			$errors = validate_depot($_POST, $champs);
 
 			if(empty($errors)) {
+				$_POST['matiereDangereuse'] = ($_POST['matiereDangereuse'] == 'on');
+
 				$sql = sql_update($_POST, 'depot', array('num' => $_POST['num']));
 				$r = mysql_query($sql);
 				if($r) {
