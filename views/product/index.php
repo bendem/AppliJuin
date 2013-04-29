@@ -9,6 +9,15 @@
 		</div>
 	</div>
 </div>
+
+<div class="row-fluid">
+	<div class="span12">
+		<a href="<?= url(array('action' => $req['action'], 'view' => 'add')) ?>" class="btn btn-block btn-large btn-info">
+			Ajouter un produit
+		</a>
+	</div>
+</div>
+
 <div class="row-fluid">
 	<div class="span12">
 		<table class="table table-striped table-hover">
