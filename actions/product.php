@@ -17,6 +17,7 @@ function index() {
 }
 
 function add($params) {
+	kick();
 	$champs = array(
 		'nom' => array(
 			'label' => 'Nom'
@@ -42,7 +43,7 @@ function add($params) {
 		)
 	);
 
-		$errors = array();
+	$errors = array();
 
 	if(!empty($_POST)) {
 		if(array_keys($_POST) == array_keys($champs)) {
@@ -80,9 +81,6 @@ function add($params) {
 		'champs' => $champs,
 		'errors' => $errors
 	);
-}
-
-function del($params) {
 }
 
 function edit($params) {
@@ -189,4 +187,28 @@ function info($params) {
 		'nom' => ucfirst($params[0]),
 		'data' => $data
 	);
+}
+
+function del($params) {
+	/**
+	 * Penser à supprimer les stocks correspondants !!!
+	 */
+	kick();
+	if(is_string($params[0]) && is_numeric($params[1])) {
+		$nom = $params[0];
+		$id = (int) $params[1];
+
+		mysql_auto_connect();
+		$q = 'DELETE FROM produit WHERE num=' . $id;
+		if(mysql_query($q)) {
+			session_set_flash('Produit supprimé avec succès', 'success');
+		} else {
+			session_set_flash('Erreur interne', 'error');
+		}
+	} else {
+		session_set_flash('Problème de paramètres pour la suppression', 'error');
+	}
+	redirect(url(array(
+		'action' => 'product'
+	)));
 }

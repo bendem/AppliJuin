@@ -1,10 +1,12 @@
 <?php $title_for_layout = 'Commandes' ?>
 
-<div class="row-fluid">
-	<div class="span12">
-		<a href="<?= url(array('action' => $req['action'], 'view' => 'add')) ?>" class="btn btn-block btn-large btn-info">Nouvelle commande</a>
+<?php if(is_connected()): ?>
+	<div class="row-fluid">
+		<div class="span12">
+			<a href="<?= url(array('action' => $req['action'], 'view' => 'add')) ?>" class="btn btn-block btn-large btn-info">Nouvelle commande</a>
+		</div>
 	</div>
-</div>
+<?php endif; ?>
 
 <div class="row-fluid">
 	<div class="span12">

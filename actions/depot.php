@@ -45,6 +45,7 @@ function index($fla = null) {
 }
 
 function add() {
+	kick();
 	/* Définition du formulaire */
 	$post = array(
 		'nom' => array(

@@ -10,13 +10,15 @@
 	</div>
 </div>
 
-<div class="row-fluid">
-	<div class="span12">
-		<a href="<?= url(array('action' => $req['action'], 'view' => 'add')) ?>" class="btn btn-block btn-large btn-info">
-			Ajouter une unité de fabrication
-		</a>
+<?php if(is_connected()): ?>
+	<div class="row-fluid">
+		<div class="span12">
+			<a href="<?= url(array('action' => $req['action'], 'view' => 'add')) ?>" class="btn btn-block btn-large btn-info">
+				Ajouter une unité de fabrication
+			</a>
+		</div>
 	</div>
-</div>
+<?php endif; ?>
 
 <div class="row-fluid">
 	<div class="span12">

@@ -1,12 +1,14 @@
 <?php $title_for_layout = 'Produits' ?>
 
-<div class="row-fluid">
-	<div class="span12">
-		<a href="<?= url(array('action' => $req['action'], 'view' => 'add')) ?>" class="btn btn-block btn-large btn-info">
-			Ajouter un produit
-		</a>
+<?php if(is_connected()): ?>
+	<div class="row-fluid">
+		<div class="span12">
+			<a href="<?= url(array('action' => $req['action'], 'view' => 'add')) ?>" class="btn btn-block btn-large btn-info">
+				Ajouter un produit
+			</a>
+		</div>
 	</div>
-</div>
+<?php endif; ?>
 
 <div class="row-fluid">
 	<div class="span12">

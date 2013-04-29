@@ -10,13 +10,15 @@
 	</div>
 </div>
 
-<div class="row-fluid">
-	<div class="span12">
-		<a href="<?= url(array('action' => $req['action'], 'view' => 'add')) ?>" class="btn btn-block btn-large btn-info">
-			Ajouter un dépôt
-		</a>
+<?php if(is_connected()): ?>
+	<div class="row-fluid">
+		<div class="span12">
+			<a href="<?= url(array('action' => $req['action'], 'view' => 'add')) ?>" class="btn btn-block btn-large btn-info">
+				Ajouter un dépôt
+			</a>
+		</div>
 	</div>
-</div>
+<?php endif; ?>
 
 <div class="row-fluid">
 	<div class="span12">
@@ -26,8 +28,8 @@
 					<th>#</th>
 					<th>Nom</th>
 					<th>Adresse</th>
-					<th>CP</th>
 					<th>Ville</th>
+					<th>Code Postal</th>
 					<th>Capacité de stockage</th>
 					<th>Matière dangereuse</th>
 					<th>Actions</th>

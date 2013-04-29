@@ -46,6 +46,7 @@ function index($fla = null) {
 }
 
 function add() {
+	kick();
 	/* Définition du formulaire */
 	$post = array(
 		'nom' => array(
@@ -122,20 +123,16 @@ function del($params) {
 	if(is_string($params[0]) && is_numeric($params[1])) {
 		$nom = $params[0];
 		$id = (int) $params[1];
+
+		mysql_auto_connect();
+		$q = 'DELETE FROM unite_fabrication WHERE num=' . $id;
+		if(mysql_query($q)) {
+			session_set_flash('Unité supprimée avec succès', 'success');
+		} else {
+			session_set_flash('Erreur interne', 'error');
+		}
 	} else {
 		session_set_flash('Problème de paramètres pour la suppression', 'error');
-		redirect(url(array(
-			'action' => 'unit'
-		)));
-	}
-
-
-	mysql_auto_connect();
-	$q = 'DELETE FROM unite_fabrication WHERE num=' . $id;
-	if(mysql_query($q)) {
-		session_set_flash('Unité supprimée avec succès', 'success');
-	} else {
-		session_set_flash('Erreur interne', 'error');
 	}
 	redirect(url(array(
 		'action' => 'unit'
