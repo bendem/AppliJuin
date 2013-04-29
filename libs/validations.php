@@ -13,7 +13,7 @@ function validate_depot($post, $champs) {
 		$errors['ville'] = 'La ville doit comporter 2 à 255 caractères';
 	}
 	if(!preg_match('/[1-9][0-9]{3}/', $post['cp'])) {
-		$errors['cp'] = 'Le code postal doit être un nombre à 4 chiffres';
+		$errors['cp'] = 'Le code postal doit être un nombre à 4 chiffres (>=1000)';
 	}
 	if(!is_numeric($post['capaciteStockage'])) {
 		$errors['capaciteStockage'] = 'La capacité de stockage doit être un nombre';
@@ -44,7 +44,7 @@ function validate_unit($post) {
 		$errors['capaciteMax'] = 'La capacité maximale doit être une valeur entière';
 	}
 	if(!preg_match('/[1-9][0-9]{3}/', $_POST['cp'])) {
-		$errors['cp'] = 'Le code postal doit être un nombre à 4 chiffres';
+		$errors['cp'] = 'Le code postal doit être un nombre à 4 chiffres (>=1000)';
 	}
 
 	return $errors;

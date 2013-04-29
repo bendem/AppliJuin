@@ -26,8 +26,8 @@
 					<th>#</th>
 					<th>Nom</th>
 					<th>Adresse</th>
-					<th>CP</th>
 					<th>Ville</th>
+					<th>CP</th>
 					<th>Capacité maximale</th>
 					<th>Actions</th>
 				</tr>
