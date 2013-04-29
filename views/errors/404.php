@@ -1,4 +1,20 @@
 <?php $title_for_layout = '404' ?>
+
+<?php
+$nyan = array(
+	'america', 'balloon', 'daft',
+	'dub', 'elevator', 'fiesta',
+	'gb', 'j5', 'jamaicnyan',
+	'jazz', 'mexinyan',
+	'names', 'newyear', 'nyan',
+	'nyaninja', 'pikanyan', 'retro',
+	'sad', 'slomo', 'smurf',
+	'tacnayn', 'technyancolor', 'vday',
+	'wtf'
+);
+
+$nyan = $nyan[rand(0, sizeof($nyan) - 1)];
+?>
 <div class="row-fluid">
 	<div class="span12">
 		<h2>La page n'a pas été trouvée...</h2>
@@ -7,6 +23,13 @@
 		</p>
 		<p>
 			<?php boum(); ?>
+		</p>
+		<p>
+			<audio autoplay loop>
+				<source src="<?php echo webroot('sounds/ogg/' . $nyan . '.ogg') ?>" type="audio/ogg">
+				<source src="<?php echo webroot('sounds/mp3/' . $nyan . '.mp3') ?>" type="audio/mpeg">
+				Votre navigateur ne supporte pas le son...
+			</audio>
 		</p>
 	</div>
 </div>
