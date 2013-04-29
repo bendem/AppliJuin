@@ -2,16 +2,6 @@
 
 <div class="row-fluid">
 	<div class="span12">
-		<div class="btn-group">
-			<?php foreach ($alph as $v): ?>
-				<a href="<?= url(array_merge($req, array('params' => array(strtolower($v))))) ?>" class="btn <?= (!in_array($v, $enabled)) ? 'disabled ' : '' ?><?= ($v == $active) ? 'active' : '' ?>"><?= $v ?></a>
-			<?php endforeach; ?>
-		</div>
-	</div>
-</div>
-
-<div class="row-fluid">
-	<div class="span12">
 		<a href="<?= url(array('action' => $req['action'], 'view' => 'add')) ?>" class="btn btn-block btn-large btn-info">
 			Ajouter un produit
 		</a>

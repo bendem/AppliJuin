@@ -1,4 +1,4 @@
-<?php $title_for_layout = 'Dépôts' ?>
+<?php $title_for_layout = 'Édition de dépôts' ?>
 
 <div class="row-fluid">
 	<div class="span12">

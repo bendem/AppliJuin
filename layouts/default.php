@@ -16,7 +16,7 @@
 
 		<div class="container-fluid">
 
-			<?= breadcrumb($req); ?>
+			<?php //echo breadcrumb($req); ?>
 			<?= session_flash(); ?>
 
 			<div class="row-fluid">

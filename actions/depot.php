@@ -66,7 +66,12 @@ function add() {
 			'type' => 'select',
 			'label' => 'Responsable',
 			'values' => array(
-				'', 'XA', 'GT', 'LP', 'RS', 'TT'
+				'',
+				'XA' => 'XA',
+				'GT' => 'GT',
+				'LP' => 'LP',
+				'RS' => 'RS',
+				'TT' => 'TT'
 			)
 		),
 		'matiereDangereuse' => array(
@@ -79,16 +84,13 @@ function add() {
 
 	if(!empty($_POST)) {
 		if(array_keys($_POST) == array_keys($post)) {
-			/*
-				Gestion des erreurs
-			 */
+
 			$errors = validate_depot($_POST, $post);
 
 			if(empty($errors)) {
 				$_POST['matiereDangereuse'] = ($_POST['matiereDangereuse'] == 'on');
 
 				mysql_auto_connect();
-				$_POST['responsable'] = $post['responsable']['values'][$_POST['responsable']];
 				$sql = sql_insert($_POST, 'depot');
 				if(mysql_query($sql)) {
 					session_set_flash('Dépôt ajouté...');
@@ -172,7 +174,12 @@ function edit($params) {
 			'type' => 'select',
 			'label' => 'Responsable',
 			'values' => array(
-				'', 'XA', 'GT', 'LP', 'RS', 'TT'
+				'',
+				'XA' => 'XA',
+				'GT' => 'GT',
+				'LP' => 'LP',
+				'RS' => 'RS',
+				'TT' => 'TT'
 			)
 		),
 		'matiereDangereuse' => array(

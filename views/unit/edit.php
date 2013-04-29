@@ -1,4 +1,4 @@
-<?php $title_for_layout = "Édition" ?>
+<?php $title_for_layout = "Édition d'unité de fabrication" ?>
 
 <div class="row">
 	<div class="span12">

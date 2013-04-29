@@ -1,4 +1,4 @@
-<?php $title_for_layout = "Ajout/Modification d'unité de fabrication" ?>
+<?php $title_for_layout = "Ajout d'unité de fabrication" ?>
 
 <div class="row-fluid">
 	<div class="span12">

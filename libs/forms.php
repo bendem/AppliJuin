@@ -24,7 +24,6 @@ function form_input($name, array $options = array()) {
 			unset($options[$v]);
 		}
 	}
-	//$options = array_diff($options, $specOptions);
 
 	ob_start();
 	require TEMPLATES_DIR . DS . 'input.php';
@@ -60,11 +59,9 @@ function form_select($name, array $options = array()) {
 	if(!isset($specOptions['value'])) {
 		$specOptions['value'] = current(array_keys($specOptions['values']));
 	}
-	//$options = array_diff_assoc($options, $specOptions);
 
 	ob_start();
 	require TEMPLATES_DIR . DS . 'select.php';
-
 	return ob_get_clean();
 }
 
