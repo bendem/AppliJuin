@@ -30,6 +30,7 @@ function validate_depot($post, $champs) {
 
 function validate_unit($post) {
 	$errors = array();
+
 	if(strlen($_POST['nom']) > 255 || strlen($_POST['nom']) < 3) {
 		$errors['nom'] = 'Le nom doit comporter 3 à 255 caractères';
 	}
@@ -45,5 +46,28 @@ function validate_unit($post) {
 	if(!preg_match('/[1-9][0-9]{3}/', $_POST['cp'])) {
 		$errors['cp'] = 'Le code postal doit être un nombre à 4 chiffres';
 	}
+
+	return $errors;
+}
+
+function validate_product($post, $champs) {
+	$errors = array();
+
+	if(strlen($_POST['nom']) > 100 || strlen($_POST['nom']) < 3) {
+		$errors['nom'] = 'Le nom doit comporter 3 à 100 caractères';
+	}
+	if(strlen($_POST['uniteMesure']) > 10 || strlen($_POST['uniteMesure']) < 1) {
+		$errors['uniteMesure'] = 'L\'unité de mesure doit comporter 1 à 100 caractères';
+	}
+	if(!is_numeric($_POST['prix'])) {
+		$errors['prix'] = 'Le prix doit être une valeur numérique';
+	}
+	if(!in_array($post['type'], array_keys($champs['type']['values']))) {
+		$errors['type'] = 'Le type doit faire partie de la liste';
+	}
+	if(!in_array($post['categorie'], array('on', 'off'))) {
+		$errors['categorie'] = 'Vous ne pouvez pas choisir votre valeur';
+	}
+
 	return $errors;
 }
