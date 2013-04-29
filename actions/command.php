@@ -48,22 +48,28 @@ function add(array $params = null) {
 		}
 	}
 
-	if($numUnite) {
-		$r = mysql_query(sql_select('num, nom', 'unite_fabrication'));
-		$d = var_dump(mysql_fetch_all($r));
+	$r = mysql_query(sql_select('num, nom', 'unite_fabrication'));
+	$units = array();
+	while ($d = mysql_fetch_assoc($r)) {
+		$units[$d['num']] = $d['nom'];
+	}
+	$r = mysql_query(sql_select('num, nom', 'depot'));
+	$depots = array();
+	while ($d = mysql_fetch_assoc($r)) {
+		$depots[$d['num']] = $d['nom'];
 	}
 
 	$champs = array(
 		'numUnite' => array(
 			'label' => 'Unité de fabrication',
 			'type' => 'select',
-			'values' => array(2 => 'lol', 1 => 'test'),
+			'values' => $units,
 			'value' => (int) $numUnite
 		),
 		'numDepot' => array(
 			'label' => 'Dépôt',
 			'type' => 'select',
-			'values' => array(),
+			'values' => $depots,
 			'value' => (int) $numDepot
 		)
 	);

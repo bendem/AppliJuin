@@ -6,8 +6,8 @@
 
 			<?php
 			foreach($champs as $k => $v) {
-				if(isset($v['type'])) {
 
+				if(isset($v['type'])) {
 					$type = $v['type'];
 					unset($v['type']);
 
@@ -16,12 +16,10 @@
 					} elseif($type == 'checkbox') {
 						echo form_checkbox($k, $v);
 					}
-
 				} else {
-
 					echo form_input($k, $v);
-
 				}
+
 			}
 			?>
 
