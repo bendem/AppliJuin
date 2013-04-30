@@ -18,7 +18,11 @@
 					<th>#</th>
 					<th>Nom</th>
 					<th>Unité de mesure</th>
-					<th>Prix</th>
+					<th>
+						<a href="<?= url($tri) ?>" data-toggle="tooltip" data-title="Tri ascendant">
+							Prix
+						</a>
+					</th>
 					<th>Type</th>
 					<th>Matière dangereuse</th>
 					<th>Actions</th>
@@ -43,7 +47,7 @@
 							<?= ($v['categorie']) ? 'oui' : 'non' ?>
 						</td>
 						<td>
-							<?= actions($req['action'], array($v['nom'], $v['num']), $del_confirm) ?>
+							<?= actions($req['action'], array($v['num']), $del_confirm) ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>

@@ -1,4 +1,4 @@
-<?php $title_for_layout = 'Information sur ' . $nom ?>
+<?php $title_for_layout = 'Information sur ' . $data['nom'] ?>
 
 <div class="row-fluid">
 	<div class="span12">

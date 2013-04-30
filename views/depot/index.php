@@ -55,7 +55,7 @@
 							<?= ($v['matiereDangereuse']) ? 'oui' : 'non' ?>
 						</td>
 						<td>
-							<?= actions($req['action'], array($v['nom'], $v['num']), $del_confirm) ?>
+							<?= actions($req['action'], array($v['num']), $del_confirm) ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>

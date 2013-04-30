@@ -31,7 +31,7 @@
 						<td><?= $v['nom_unite'] ?></td>
 						<td><?= $v['numDepot'] ?></td>
 						<td><?= $v['nom_depot'] ?></td>
-						<td><?= actions($req['action'], array('', ''), $del_confirm) ?></td>
+						<td><?= actions($req['action'], array($v['num']), $del_confirm) ?></td>
 					</tr>
 				<?php endforeach; ?>
 			</tbody>

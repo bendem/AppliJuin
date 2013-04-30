@@ -16,7 +16,7 @@ function index() {
 		'del_confirm' => htmlentities('Êtes-vous sûr ? <a href="' . url(array(
 			'action' => 'command',
 			'view' => 'del',
-			'params' => array('%s', '%s')
+			'params' => array('%s')
 		)) . '" class="del btn btn-warning">Oui</a>')
 	);
 }
@@ -24,6 +24,7 @@ function index() {
 function add(array $params = null) {
 	mysql_auto_connect();
 
+	// Paramètres de présélection d'unité/dépôt
 	$numUnite = false;
 	$numDepot = false;
 	$numeric = array(0, 2, 3, 5);
@@ -53,6 +54,7 @@ function add(array $params = null) {
 		}
 	}
 
+	// On récupère les unités / dépôts / produits
 	$r = mysql_query(sql_select('num, nom, cp', 'unite_fabrication'));
 	$units = array();
 	while ($d = mysql_fetch_assoc($r)) {
@@ -63,7 +65,14 @@ function add(array $params = null) {
 	while ($d = mysql_fetch_assoc($r)) {
 		$depots[$d['num']] = $d['nom'] . ' - ' . $d['cp'];
 	}
+	$q = 'SELECT *
+		FROM produit
+		INNER JOIN stock ON (stock.numProduit = produit.num)
+		WHERE stock.quantite > 0';
+	$r = mysql_query($q);
+	$products = mysql_fetch_all($r);
 
+	// Création du formulaire
 	$champs = array(
 		'numUnite' => array(
 			'label' => 'Unité de fabrication',
@@ -76,10 +85,23 @@ function add(array $params = null) {
 			'type' => 'select',
 			'values' => $depots,
 			'value' => (int) $numDepot
+		),
+		'numProduit' => array(
+			'label' => 'Produit',
+			'type' => 'select',
+			'values' => $products
 		)
 	);
 
+	// Traitement du post
+	if(!empty($_POST)) {
+		if(array_keys($_POST) == array_keys($champs)) {
+			var_dump($_POST);
+		}
+	}
+
 	return array(
-		'champs' => $champs
+		'champs' => $champs,
+		'products' => !empty($products)
 	);
 }

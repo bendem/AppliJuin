@@ -39,7 +39,7 @@ function index($fla = null) {
 		'del_confirm' => htmlentities('Êtes-vous sûr ? <a href="' . url(array(
 			'action' => 'depot',
 			'view' => 'del',
-			'params' => array('%s', '%s')
+			'params' => array('%s')
 		)) . '" class="del btn btn-warning">Oui</a>')
 	);
 }
@@ -130,16 +130,14 @@ function del($params) {
 	 * Penser à supprimer les produits correspondants !!!
 	 */
 	kick();
-	if(is_string($params[0]) && is_numeric($params[1])) {
-		$nom = $params[0];
-		$id = (int) $params[1];
+	if(is_numeric($params[0])) {
+		$id = (int) $params[0];
 	} else {
 		session_set_flash('Problème de paramètres pour la suppression', 'error');
 		redirect(url(array(
 			'action' => 'depot'
 		)));
 	}
-
 
 	mysql_auto_connect();
 	$q = 'DELETE FROM depot WHERE num=' . $id;
@@ -221,7 +219,7 @@ function edit($params) {
 
 	/* Récupération des infos de l'unité */
 	$sql = sql_select('*', 'depot', array(
-		'num' => $params[1]
+		'num' => $params[0]
 	));
 	$r = mysql_query($sql);
 	if(!$data = mysql_fetch_assoc($r)) {
@@ -257,13 +255,12 @@ function edit($params) {
 }
 
 function info($params) {
-	if(is_numeric($params[1])) {
-		$id = $params[1];
+	if(is_numeric($params[0])) {
+		$id = $params[0];
 		mysql_auto_connect();
 		$data = mysql_fetch_assoc(mysql_query(sql_select('*', 'depot', array('num' => $id))));
 	}
 	return array(
-		'nom' => ucfirst($params[0]),
 		'data' => $data
 	);
 }

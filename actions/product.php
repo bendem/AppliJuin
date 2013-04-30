@@ -1,17 +1,38 @@
 <?php
 
-function index() {
+function index($params) {
 	mysql_auto_connect();
 
-	$r = mysql_query(sql_select('*', 'produit'));
+	$valid_params = array(
+		'tri', 'fl'
+	);
+
+	$tri = 'desc';
+	$fl = false;
+
+	foreach ($params as $k => $v) {
+		if($v == 'tri') {
+			$tri = 'asc';
+		} elseif($v == 'fla' && isset($params[$k+1])) {
+			$fl = $params[$k+1];
+		}
+	}
+
+	$r = mysql_query(sql_select('*', 'produit') . ' ORDER BY prix ' . strtoupper($tri));
 	$data = mysql_fetch_all($r);
 
+	$tri_url['action'] = 'product';
+	if($tri != 'asc') {
+		$tri_url['params'] = array('tri');
+	}
+
 	return array(
+		'tri' => $tri_url,
 		'data' => $data,
 		'del_confirm' => htmlentities('Êtes-vous sûr ? <a href="' . url(array(
 			'action' => 'product',
 			'view' => 'del',
-			'params' => array('%s', '%s')
+			'params' => array('%s')
 		)) . '" class="del btn btn-warning">Oui</a>')
 	);
 }
@@ -142,7 +163,7 @@ function edit($params) {
 
 	/* Récupération des infos de l'unité */
 	$sql = sql_select('*', 'produit', array(
-		'num' => $params[1]
+		'num' => $params[0]
 	));
 	$r = mysql_query($sql);
 	if(!$data = mysql_fetch_assoc($r)) {
@@ -178,13 +199,12 @@ function edit($params) {
 }
 
 function info($params) {
-	if(is_numeric($params[1])) {
-		$id = $params[1];
+	if(is_numeric($params[0])) {
+		$id = $params[0];
 		mysql_auto_connect();
 		$data = mysql_fetch_assoc(mysql_query(sql_select('*', 'produit', array('num' => $id))));
 	}
 	return array(
-		'nom' => ucfirst($params[0]),
 		'data' => $data
 	);
 }

@@ -55,11 +55,11 @@
 								'action' => 'command',
 								'view' => 'add',
 								'params' => array(
-									1, $v['nom'], $v['num'] // le 1 sert à préciser que c'est une unité de fabrication
+									1, $v['num'] // le 1 sert à préciser que c'est une unité de fabrication
 								))) ?>" class="btn" data-toggle="tooltip" data-title="Effectuer une commande">
 								<span class="icon-shopping-cart"></span>
 							</a>
-							<?= actions($req['action'], array($v['nom'], $v['num']), $del_confirm) ?>
+							<?= actions($req['action'], array($v['num']), $del_confirm) ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>

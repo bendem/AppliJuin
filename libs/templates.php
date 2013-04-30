@@ -93,6 +93,9 @@ function nav_sidebar() {
 			'action' => 'product'
 		)) => 'produits',
 		url(array(
+			'action' => 'stock'
+		)) => 'Stocks',
+		url(array(
 			'action' => 'command'
 		)) => 'commandes'
 	);
