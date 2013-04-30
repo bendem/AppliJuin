@@ -85,15 +85,7 @@ function add($params) {
 				}
 			} else {
 				session_set_flash('Il y a des erreurs dans le formulaire...', 'warning');
-				foreach ($champs as $k => $v) {
-					if(isset($errors[$k])) {
-						$champs[$k]['help'] = $errors[$k];
-						$champs[$k]['state'] = 'warning';
-					} else {
-						$champs[$k]['state'] = 'success';
-					}
-					$champs[$k]['value'] = $_POST[$k];
-				}
+				inject_errors($champs, $errors);
 			}
 		} else {
 			session_set_flash('Formulaire incorect...', 'error');

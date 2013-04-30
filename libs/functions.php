@@ -217,3 +217,15 @@ function boum() {
 	</script>
 	<?php
 }
+
+function inject_errors(&$champs, $errors) {
+	foreach ($champs as $k => $v) {
+		if(isset($errors[$k])) {
+			$champs[$k]['help'] = $errors[$k];
+			$champs[$k]['state'] = 'warning';
+		} else {
+			$champs[$k]['state'] = 'success';
+		}
+		$champs[$k]['value'] = $_POST[$k];
+	}
+}

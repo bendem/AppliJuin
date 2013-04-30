@@ -104,15 +104,7 @@ function add() {
 				}
 			} else {
 				session_set_flash('Il y a des erreurs dans le formulaire...', 'warning');
-				foreach ($post as $k => $v) {
-					if(isset($errors[$k])) {
-						$post[$k]['help'] = $errors[$k];
-						$post[$k]['state'] = 'warning';
-					} else {
-						$post[$k]['state'] = 'success';
-					}
-					$post[$k]['value'] = $_POST[$k];
-				}
+				inject_errors($post, $errors);
 			}
 		} else {
 			session_set_flash('Formulaire incorect...', 'error');
