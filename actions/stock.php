@@ -91,6 +91,70 @@ function add() {
 
 function edit($params) {
 	mysql_auto_connect();
+	if(sizeof($params) != 2 || !is_numeric($params[0]) || !is_numeric($params[1])) {
+		session_set_flash("Stock incorect", 'error');
+		redirect(url(array(
+			'action' => 'stock'
+		)));
+	}
+
+	$r = mysql_query('SELECT * FROM stock WHERE numDepot=' . $params[0] . ' AND numProduit=' . $params[1]);
+	$data = mysql_fetch_assoc($r);
+
+	$champs = array(
+		'numDepot' => array(
+			'label' => 'Dépôt',
+			'value' => $params[0],
+			'readonly' => 'true'
+		),
+		'numProduit' => array(
+			'label' => 'Produit',
+			'value' => $params[1],
+			'readonly' => 'true'
+		),
+		'quantite' => array(
+			'label' => 'Quantité',
+			'value' => $data['quantite']
+		)
+	);
+
+	if(!empty($_POST)) {
+		if(array_keys($_POST) == array_keys($champs)) {
+
+			$errors = validate_stock($_POST, $champs);
+
+			if(empty($errors)) {
+				/*
+					Ajout en bdd !!!
+				 */
+				$sql = sql_insert($_POST, 'stock');
+				$sql .= ' ON DUPLICATE KEY UPDATE quantite=' . $_POST['quantite'];
+				if(mysql_query($sql)) {
+					session_set_flash('Stock mis à jour...');
+					$champs['quantite']['value'] = $_POST['quantite'];
+				} else {
+					session_set_flash("Erreur interne ($sql)", 'error');
+				}
+			} else {
+				session_set_flash('Il y a des erreurs dans le formulaire...', 'warning');
+				foreach ($champs as $k => $v) {
+					if(isset($errors[$k])) {
+						$champs[$k]['help'] = $errors[$k];
+						$champs[$k]['state'] = 'warning';
+					} else {
+						$champs[$k]['state'] = 'success';
+					}
+					$champs[$k]['value'] = $_POST[$k];
+				}
+			}
+		} else {
+			session_set_flash('Formulaire incorect...', 'error');
+		}
+	}
+
+	return array(
+		'champs' => $champs
+	);
 }
 
 function del($params) {
