@@ -47,6 +47,14 @@
 							<?= ($v['categorie']) ? 'oui' : 'non' ?>
 						</td>
 						<td>
+							<a href="<?= url(array(
+								'action' => 'command',
+								'view' => 'add',
+								'params' => array(
+									3, $v['num'] // le 3 sert à préciser que c'est un produit
+								))) ?>" class="btn <?= ($v['quantite']) ? '' : 'disabled' ?>" data-toggle="tooltip" data-title="Effectuer une commande">
+								<span class="icon-shopping-cart"></span>
+							</a>
 							<?= actions($req['action'], array($v['num']), $del_confirm) ?>
 						</td>
 					</tr>

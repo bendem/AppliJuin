@@ -18,7 +18,9 @@ function index($params) {
 		}
 	}
 
-	$r = mysql_query(sql_select('*', 'produit') . ' ORDER BY prix ' . strtoupper($tri));
+	$r = mysql_query('SELECT * FROM produit
+		LEFT JOIN stock ON (stock.numProduit=produit.num)
+		ORDER BY prix ' . strtoupper($tri));
 	$data = mysql_fetch_all($r);
 
 	$tri_url['action'] = 'product';

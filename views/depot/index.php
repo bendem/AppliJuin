@@ -55,6 +55,14 @@
 							<?= ($v['matiereDangereuse']) ? 'oui' : 'non' ?>
 						</td>
 						<td>
+							<a href="<?= url(array(
+								'action' => 'command',
+								'view' => 'add',
+								'params' => array(
+									2, $v['num'] // le 2 sert à préciser que c'est un dépôt
+								))) ?>" class="btn" data-toggle="tooltip" data-title="Effectuer une commande">
+								<span class="icon-shopping-cart"></span>
+							</a>
 							<?= actions($req['action'], array($v['num']), $del_confirm) ?>
 						</td>
 					</tr>
