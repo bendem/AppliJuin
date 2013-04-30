@@ -26,7 +26,7 @@
 				<?php foreach($data as $v): ?>
 					<tr>
 						<td><?= $v['num'] ?></td>
-						<td><?= date('d-m-y à H:i:s', strtotime($v['dateCommande'])) ?></td>
+						<td><?= date('d-m-Y', strtotime($v['dateCommande'])) ?></td>
 						<td><?= $v['numUnite'] ?></td>
 						<td><?= $v['nom_unite'] ?></td>
 						<td><?= $v['numDepot'] ?></td>
