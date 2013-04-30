@@ -1,5 +1,11 @@
 <?php
 
+function form($champs) {
+	ob_start();
+	require TEMPLATES_DIR . DS . 'form.php';
+	return ob_get_clean();
+}
+
 /**
  * Génère un input de type text | number | password | date | file
  * @param array $options Options à ajouter au champs (label, id, state, class, help...)

@@ -13,7 +13,7 @@
 	)) ?>" class="btn btn-warning">
 		<span class="icon-edit"></span>
 	</a>
-	<a href="#" class="btn btn-danger" data-content="<?php printf($del_confirm_text, $params[0]) ?>" data-html="true" data-text="Vraiment sur ?" data-toggle="popover" data-title="Suppression">
+	<a href="#" class="btn btn-danger" data-content="<?= $del_confirm_text ?>" data-html="true" data-text="Vraiment sur ?" data-toggle="popover" data-title="Suppression">
 		<span class="icon-remove"></span>
 	</a>
 <?php endif; ?>

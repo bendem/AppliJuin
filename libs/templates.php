@@ -130,6 +130,9 @@ function nav_sidebar() {
 }
 
 function actions($action, $params, $del_confirm_text) {
+	foreach ($params as $v) {
+		$del_confirm_text = preg_replace("/(%s)/", $v, $del_confirm_text, 1);
+	}
 	ob_start();
 	require TEMPLATES_DIR . DS . 'actions.php';
 	return ob_get_clean();

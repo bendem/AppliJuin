@@ -70,7 +70,9 @@ function add(array $params = null) {
 		INNER JOIN stock ON (stock.numProduit = produit.num)
 		WHERE stock.quantite > 0';
 	$r = mysql_query($q);
-	$products = mysql_fetch_all($r);
+	while ($d = mysql_fetch_assoc($r)) {
+		$products[$d['num']] = $d['nom'];
+	}
 
 	// Création du formulaire
 	$champs = array(

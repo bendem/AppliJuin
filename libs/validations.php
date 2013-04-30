@@ -71,3 +71,27 @@ function validate_product($post, $champs) {
 
 	return $errors;
 }
+
+function validate_stock($post, $champs) {
+	$errors = array();
+	if(!is_numeric($post['numDepot'])) {
+		$errors['numDepot'] = "Vous ne pouvez pas choisir";
+	}
+	if(!is_numeric($post['numProduit'])) {
+		$errors['numProduit'] = "Vous ne pouvez pas choisir";
+	}
+	if(!is_numeric($post['quantite']) || $post['quantite'] < 1) {
+		$errors['quantite'] = "La quantité doit être un nombre positif";
+	}
+
+	if(empty($errors)) {
+		if(mysql_num_rows(mysql_query('SELECT * FROM depot WHERE num=' . $post['numDepot'])) < 1) {
+			$errors['numDepot'] = "Le dépôt n'existe pas";
+		}
+		if(mysql_num_rows(mysql_query('SELECT * FROM produit WHERE num=' . $post['numProduit'])) < 1) {
+			$errors['numDepot'] = "Le produit n'existe pas";
+		}
+	}
+
+	return $errors;
+}
