@@ -22,6 +22,7 @@ function index() {
 }
 
 function add(array $params = null) {
+	kick();
 	mysql_auto_connect();
 
 	// Paramètres de présélection d'unité/dépôt

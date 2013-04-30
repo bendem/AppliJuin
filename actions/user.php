@@ -100,6 +100,23 @@ function index() {
 		)
 	);
 
+	if(!empty($_POST) && array_keys($_POST) == array_keys($champs)) {
+		if($_POST['pwd1'] == $_POST['pwd2']) {
+			mysql_auto_connect();
+
+			$q = sql_update(
+				array('pwd' => sha1($_POST['pwd1'])),
+				'users',
+				array('id' => session_read('user')['id'])
+			);
+			if(mysql_query($q)) {
+				session_set_flash('Mdp changé');
+			}
+		} else {
+			session_set_flash('Les mdp doivent correspondre', 'error');
+		}
+	}
+
 	return array('champs' => $champs);
 }
 

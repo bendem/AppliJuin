@@ -20,6 +20,7 @@ function index() {
 }
 
 function add() {
+	kick();
 	mysql_auto_connect();
 	$q = array(
 		'depots' => 'SELECT num, nom FROM depot',
@@ -79,6 +80,7 @@ function add() {
 }
 
 function edit($params) {
+	kick();
 	mysql_auto_connect();
 	if(sizeof($params) != 2 || !is_numeric($params[0]) || !is_numeric($params[1])) {
 		session_set_flash("Stock incorect", 'error');
@@ -147,6 +149,8 @@ function edit($params) {
 }
 
 function del($params) {
+	kick();
+
 	mysql_auto_connect();
 	if(mysql_query('DELETE FROM stock WHERE numProduit=' . $params[1] . ' AND numDepot=' . $params[0])) {
 		session_set_flash('Le produit a été supprimé du stock');
