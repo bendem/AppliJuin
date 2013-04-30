@@ -57,9 +57,6 @@ function add() {
 			$errors = validate_stock($_POST, $champs);
 
 			if(empty($errors)) {
-				/*
-					Ajout en bdd !!!
-				 */
 				$sql = sql_insert($_POST, 'stock');
 				$sql .= ' ON DUPLICATE KEY UPDATE quantite=quantite+' . $_POST['quantite'];
 				if(mysql_query($sql)) {

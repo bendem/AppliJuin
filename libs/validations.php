@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Ce fichier contient les règles de validations des formulaires
+ */
+
 function validate_depot($post, $champs) {
 	$errors = array();
 
@@ -85,8 +89,17 @@ function validate_stock($post, $champs) {
 	}
 
 	if(empty($errors)) {
-		if(mysql_num_rows(mysql_query('SELECT * FROM depot WHERE num=' . $post['numDepot'])) < 1) {
+		// On ne peut pas dépasser la capacité du dépot
+		$r = mysql_query('SELECT * FROM depot WHERE num=' . $post['numDepot']);
+		$rows = mysql_num_rows($r);
+		if($rows < 1) {
 			$errors['numDepot'] = "Le dépôt n'existe pas";
+		}
+		$d = mysql_fetch_assoc($r);
+		$r = mysql_query('SELECT SUM(quantite) FROM stock WHERE numDepot=' . $post['numDepot'] . ' AND numProduit<>' . $post['numProduit']);
+		$quantity = mysql_fetch_array($r, MYSQL_NUM)[0];
+		if($quantity + $post['quantite'] > $d['capaciteStockage']) {
+			$errors['quantite'] = "Le dépôt ne peut pas contenir plus de " . $d['capaciteStockage'] . " unités";
 		}
 		if(mysql_num_rows(mysql_query('SELECT * FROM produit WHERE num=' . $post['numProduit'])) < 1) {
 			$errors['numDepot'] = "Le produit n'existe pas";
