@@ -27,29 +27,22 @@ function add(array $params = null) {
 	// Paramètres de présélection d'unité/dépôt
 	$numUnite = false;
 	$numDepot = false;
-	$numeric = array(0, 2, 3, 5);
-	$size = array(0, 3, 6);
-	if(!in_array(sizeof($params), $size)) {
+	$numProduit = false;
+	// Les paramètres vont par deux :
+	// Les premiers pour dire ce que l'on défini,
+	// le deuxième pour la valeur
+	// Par exemple : Si $param[0] vaut 1, $param[1] est l'id d'une unité
+	if(sizeof($params) % 2 != 0) {
 		var_dump(sizeof($params));
 		die("Erreur d'adresse (mauvais nombre de paramètres)");
 	} else {
-		foreach ($numeric as $v) {
-			if(isset($params[$v]) && !is_numeric($params[$v])) {
-				die("Erreur d'adresse (paramètres numériques demandé)");
-			}
-		}
-	}
-
-	if($params) {
-		if($params[0] == 1) {
-			$numUnite = $params[2];
-			if(sizeof($params) == 6) {
-				$numDepot = $params[5];
-			}
-		} else {
-			$numDepot = $params[2];
-			if(sizeof($params) == 6) {
-				$numDepot = $params[5];
+		for ($i=0; $i < sizeof($params); $i += 2) {
+			if($params[$i] == 1) {
+				$numUnite = $params[$i+1];
+			} elseif($params[$i] == 2) {
+				$numDepot = $params[$i+1];
+			} elseif($params[$i] == 3) {
+				$numProduit = $params[$i+1];
 			}
 		}
 	}
@@ -91,7 +84,8 @@ function add(array $params = null) {
 		'numProduit' => array(
 			'label' => 'Produit',
 			'type' => 'select',
-			'values' => $products
+			'values' => $products,
+			'value' => (int) $numProduit
 		)
 	);
 
