@@ -102,8 +102,7 @@ function add() {
 	}
 
 	return array(
-		'post' => $post/*,
-		'errors' => $errors*/
+		'post' => $post
 	);
 }
 
