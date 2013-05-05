@@ -52,14 +52,16 @@
 						<td><?= $v['cp'] ?></td>
 						<td><?= $v['capaciteMax'] ?></td>
 						<td>
-							<a href="<?= url(array(
-								'action' => 'command',
-								'view' => 'add',
-								'params' => array(
-									1, $v['num'] // le 1 sert à préciser que c'est une unité de fabrication
-								))) ?>" class="btn" data-toggle="tooltip" data-title="Effectuer une commande">
-								<span class="icon-shopping-cart"></span>
-							</a>
+							<?php if(is_connected()): ?>
+								<a href="<?= url(array(
+									'action' => 'command',
+									'view' => 'add',
+									'params' => array(
+										1, $v['num'] // le 1 sert à préciser que c'est une unité de fabrication
+									))) ?>" class="btn" data-toggle="tooltip" data-title="Effectuer une commande">
+									<span class="icon-shopping-cart"></span>
+								</a>
+							<?php endif ?>
 							<?= actions($req['action'], array($v['num']), $del_confirm) ?>
 						</td>
 					</tr>

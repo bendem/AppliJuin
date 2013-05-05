@@ -74,6 +74,10 @@ function register() {
 
 			if($res) {
 				session_set_flash("Vous avez bien été enregistré", 'success');
+				redirect(url(array(
+					'action' => 'user',
+					'view' => 'login'
+				)));
 			} else {
 				session_set_flash("Erreur interne", 'error');
 			}

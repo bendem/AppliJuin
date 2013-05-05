@@ -1,4 +1,5 @@
 <?php $title_for_layout = 'Accueil <small>Voici une appli php !</small>' ?>
+<?php $no_data = '<div class="alert alert-error">Pas de données...</div>'; ?>
 
 <div class="row-fluid">
 	<div class="span6">
@@ -16,7 +17,7 @@
 				<?php if(empty($commands)): ?>
 					<tr>
 						<td colspan="4" style="text-align: center;">
-							<div class="alert alert-error">Pas de données</div>
+							<?= $no_data ?>
 						</td>
 					</tr>
 				<?php endif; ?>
@@ -53,7 +54,7 @@
 				<?php if(empty($products)): ?>
 					<tr>
 						<td colspan="3" style="text-align: center;">
-							<div class="alert alert-error">Pas de données</div>
+							<?= $no_data ?>
 						</td>
 					</tr>
 				<?php endif; ?>
@@ -92,7 +93,7 @@
 				<?php if(empty($depots)): ?>
 					<tr>
 						<td colspan="3" style="text-align: center;">
-							<div class="alert alert-error">Pas de données</div>
+							<?= $no_data ?>
 						</td>
 					</tr>
 				<?php endif; ?>
@@ -128,7 +129,7 @@
 				<?php if(empty($units)): ?>
 					<tr>
 						<td colspan="3" style="text-align: center;">
-							<div class="alert alert-error">Pas de données</div>
+							<?= $no_data ?>
 						</td>
 					</tr>
 				<?php endif; ?>

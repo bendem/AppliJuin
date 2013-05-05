@@ -1,5 +1,15 @@
 <?php $title_for_layout = 'Produits' ?>
 
+<div class="row-fluid">
+	<div class="span12">
+		<div class="btn-group">
+			<?php foreach ($alph as $v): ?>
+				<a href="<?= url(array_merge($req, array('params' => array('fla', strtolower($v))))) ?>" class="btn <?= (!in_array($v, $enabled)) ? 'disabled ' : '' ?><?= ($v == $active) ? 'active' : '' ?>"><?= $v ?></a>
+			<?php endforeach; ?>
+		</div>
+	</div>
+</div>
+
 <?php if(is_connected()): ?>
 	<div class="row-fluid">
 		<div class="span12">
@@ -47,14 +57,16 @@
 							<?= ($v['categorie']) ? 'oui' : 'non' ?>
 						</td>
 						<td>
-							<a href="<?= url(array(
-								'action' => 'command',
-								'view' => 'add',
-								'params' => array(
-									3, $v['num'] // le 3 sert à préciser que c'est un produit
-								))) ?>" class="btn <?= ($v['quantite']) ? '' : 'disabled' ?>" data-toggle="tooltip" data-title="Effectuer une commande">
-								<span class="icon-shopping-cart"></span>
-							</a>
+							<?php if(is_connected()): ?>
+								<a href="<?= url(array(
+									'action' => 'command',
+									'view' => 'add',
+									'params' => array(
+										3, $v['num'] // le 3 sert à préciser que c'est un produit
+									))) ?>" class="btn <?= ($v['quantite']) ? '' : 'disabled' ?>" data-toggle="tooltip" data-title="Effectuer une commande">
+									<span class="icon-shopping-cart"></span>
+								</a>
+							<?php endif; ?>
 							<?= actions($req['action'], array($v['num']), $del_confirm) ?>
 						</td>
 					</tr>

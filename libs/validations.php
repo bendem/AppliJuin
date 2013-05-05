@@ -16,11 +16,11 @@ function validate_depot($post, $champs) {
 	if(strlen($post['ville']) > 255 || strlen($post['ville']) < 2) {
 		$errors['ville'] = 'La ville doit comporter 2 à 255 caractères';
 	}
-	if(!preg_match('/[1-9][0-9]{3}/', $post['cp'])) {
+	if(!preg_match('/^[1-9][0-9]{3}$/', $post['cp'])) {
 		$errors['cp'] = 'Le code postal doit être un nombre à 4 chiffres (>=1000)';
 	}
 	if(!is_numeric($post['capaciteStockage']) || $post['capaciteStockage'] < 1) {
-		$errors['capaciteStockage'] = 'La capacité de stockage doit être un nombre';
+		$errors['capaciteStockage'] = 'La capacité de stockage doit être un nombre entier positif';
 	}
 	if(!in_array($post['responsable'], array_keys($champs['responsable']['values']))) {
 		$errors['responsable'] = 'Le responsable doit faire partie de la liste';
@@ -45,9 +45,9 @@ function validate_unit($post) {
 		$errors['ville'] = 'La ville doit comporter 2 à 255 caractères';
 	}
 	if(!is_numeric($_POST['capaciteMax']) || $post['capaciteMax'] < 1) {
-		$errors['capaciteMax'] = 'La capacité maximale doit être une valeur entière';
+		$errors['capaciteMax'] = 'La capacité maximale doit être une valeur entière non nul, positive';
 	}
-	if(!preg_match('/[1-9][0-9]{3}/', $_POST['cp'])) {
+	if(!preg_match('/^[1-9][0-9]{3}$/', $_POST['cp'])) {
 		$errors['cp'] = 'Le code postal doit être un nombre à 4 chiffres (>=1000)';
 	}
 
@@ -57,13 +57,13 @@ function validate_unit($post) {
 function validate_product($post, $champs) {
 	$errors = array();
 
-	if(strlen($_POST['nom']) > 100 || strlen($_POST['nom']) < 3) {
+	if(strlen($post['nom']) > 100 || strlen($post['nom']) < 3) {
 		$errors['nom'] = 'Le nom doit comporter 3 à 100 caractères';
 	}
-	if(strlen($_POST['uniteMesure']) > 10 || strlen($_POST['uniteMesure']) < 1) {
+	if(strlen($post['uniteMesure']) > 10 || strlen($post['uniteMesure']) < 1) {
 		$errors['uniteMesure'] = 'L\'unité de mesure doit comporter 1 à 100 caractères';
 	}
-	if(!is_numeric($_POST['prix']) || $post['prix'] < 1) {
+	if(!is_numeric($post['prix']) || $post['prix'] < 1) {
 		$errors['prix'] = 'Le prix doit être une valeur numérique';
 	}
 	if(!in_array($post['type'], array_keys($champs['type']['values']))) {
@@ -71,6 +71,12 @@ function validate_product($post, $champs) {
 	}
 	if(!in_array($post['categorie'], array('on', 'off'))) {
 		$errors['categorie'] = 'Vous ne pouvez pas choisir votre valeur';
+	}
+	$r = mysql_query("SELECT * FROM produit WHERE nom='" . mysql_real_escape_string($post['nom']) . "'");
+	if($r) {
+		if(mysql_num_rows($r) > 0 && !isset($post['num'])) {
+			$errors['nom'] = 'Ce produit existe déjà';
+		}
 	}
 
 	return $errors;
@@ -95,14 +101,24 @@ function validate_stock($post, $champs) {
 		if($rows < 1) {
 			$errors['numDepot'] = "Le dépôt n'existe pas";
 		}
-		$d = mysql_fetch_assoc($r);
-		$r = mysql_query('SELECT SUM(quantite) FROM stock WHERE numDepot=' . $post['numDepot'] . ' AND numProduit<>' . $post['numProduit']);
-		$quantity = mysql_fetch_array($r, MYSQL_NUM)[0];
-		if($quantity + $post['quantite'] > $d['capaciteStockage']) {
-			$errors['quantite'] = "Le dépôt ne peut pas contenir plus de " . $d['capaciteStockage'] . " unités";
+		$depot = mysql_fetch_assoc($r);
+		$q = 'SELECT SUM(quantite) FROM stock WHERE numDepot=' . $post['numDepot'];
+		if(isset($post['edit'])) {
+			$q .= ' AND numProduit<>' . $post['numProduit'];
 		}
-		if(mysql_num_rows(mysql_query('SELECT * FROM produit WHERE num=' . $post['numProduit'])) < 1) {
+		$r = mysql_query($q);
+		$quantity = mysql_fetch_array($r, MYSQL_NUM)[0];
+		if($quantity + $post['quantite'] > $depot['capaciteStockage']) {
+			$errors['quantite'] = "Le dépôt ne peut pas contenir plus de " . $depot['capaciteStockage'] . " unités";
+		}
+		$r = mysql_query('SELECT * FROM produit WHERE num=' . $post['numProduit']);
+		if(mysql_num_rows($r) < 1) {
 			$errors['numDepot'] = "Le produit n'existe pas";
+		} else {
+			$prod = mysql_fetch_assoc($r);
+			if($prod['categorie'] && !$depot['matiereDangereuse']) {
+				$errors['numDepot'] = 'Le dépôt ne peut pas contenir de matières dangereuses';
+			}
 		}
 	}
 
@@ -122,6 +138,17 @@ function validate_command($post, $champs) {
 	}
 	if(!is_numeric($post['quantite']) || $post['quantite'] <= 0) {
 		$errors['quantite'] = "La quantité doit être un nombre positif...";
+	}
+	if(empty($errors)) {
+		$q = 'SELECT quantite FROM stock WHERE numProduit=' . $post['numProduit'] . ' AND numDepot=' . $post['numDepot'];
+		$r = mysql_query($q);
+		if($r) {
+			$d = mysql_fetch_assoc($r);
+			if($post['quantite'] > $d['quantite']) {
+				$errors['quantite'] = "Il n'y a pas assez de ce produit en stock";
+			}
+		}
+
 	}
 
 	return $errors;

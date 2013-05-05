@@ -1,15 +1,13 @@
 <?php
 foreach($champs as $k => $v) {
 
-	if(isset($v['type'])) {
-		$type = $v['type'];
-		unset($v['type']);
-
-		if($type == 'select') {
-			echo form_select($k, $v);
-		} elseif($type == 'checkbox') {
-			echo form_checkbox($k, $v);
-		}
+	if(!isset($v['type'])) {
+		$v['type'] = 'text';
+	}
+	if($v['type'] == 'select') {
+		echo form_select($k, $v);
+	} elseif($v['type'] == 'checkbox') {
+		echo form_checkbox($k, $v);
 	} else {
 		echo form_input($k, $v);
 	}

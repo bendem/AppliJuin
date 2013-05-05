@@ -107,7 +107,7 @@ function add() {
 				inject_errors($post, $errors);
 			}
 		} else {
-			session_set_flash('Formulaire incorect...', 'error');
+			session_set_flash('Formulaire incorrect...', 'error');
 		}
 	}
 
@@ -245,8 +245,9 @@ function edit($params) {
 			}
 		}
 	}
-
-	inject_errors($champs, $errors);
+	if(!empty($_POST)) {
+		inject_errors($champs, $errors);
+	}
 
 	return array(
 		'data' => $champs

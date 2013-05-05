@@ -70,7 +70,7 @@ function add() {
 				inject_errors($champs, $errors);
 			}
 		} else {
-			session_set_flash('Formulaire incorect...', 'error');
+			session_set_flash('Formulaire incorrect...', 'error');
 		}
 	}
 
@@ -83,7 +83,7 @@ function edit($params) {
 	kick();
 	mysql_auto_connect();
 	if(sizeof($params) != 2 || !is_numeric($params[0]) || !is_numeric($params[1])) {
-		session_set_flash("Stock incorect", 'error');
+		session_set_flash("Stock incorrect", 'error');
 		redirect(url(array(
 			'action' => 'stock'
 		)));
@@ -93,6 +93,9 @@ function edit($params) {
 	$data = mysql_fetch_assoc($r);
 
 	$champs = array(
+		'edit' => array(
+			'type' => 'hidden'
+		),
 		'numDepot' => array(
 			'label' => 'Dépôt',
 			'value' => $params[0],
@@ -128,7 +131,7 @@ function edit($params) {
 				inject_errors($champs, $errors);
 			}
 		} else {
-			session_set_flash('Formulaire incorect...', 'error');
+			session_set_flash('Formulaire incorrect...', 'error');
 		}
 	}
 

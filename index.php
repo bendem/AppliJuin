@@ -16,7 +16,7 @@ define('TEMPLATES_DIR', ROOT . DS . 'templates');
 define('WEBROOT_DIR', URL_ROOT . '/webroot');
 define('PARAMS_DELIMITER', '-');
 define('INDEX_ACTION', 'home');
-define('DEBUG', true);
+define('DEBUG', false);
 define('LOCAL', (DS == '\\'));
 define('SYMBOLE_PRIX', ' €');
 

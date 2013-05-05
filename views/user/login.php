@@ -1,4 +1,4 @@
-<?php $title_for_layout = 'Login' ?>
+<?php $title_for_layout = 'Connexion' ?>
 
 <div class="row-fluid">
 	<div class="span12">

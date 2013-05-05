@@ -1,4 +1,4 @@
-<?php $title_for_layout = 'Register' ?>
+<?php $title_for_layout = 'Inscription' ?>
 
 <div class="row-fluid">
 	<div class="span12">

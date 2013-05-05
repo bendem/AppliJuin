@@ -44,7 +44,7 @@
 					Travail de fin d'année 2012-2013 ++ [PHP] <span class="icon-road" style="font-size: 14px;"></span>
 				</div>
 				<div class="pull-left">
-					<span class="muted">&copy;</span> <a href="http://wtlink.be">bendem</a>
+					<span class="muted">&copy;</span> <a href="http://wtlink.be">Benjamin Demarteau</a>
 				</div>
 			</footer>
 		</div>

@@ -70,9 +70,7 @@ function add() {
 
 	if(!empty($_POST)) {
 		if(array_keys($_POST) == array_keys($post)) {
-			/*
-				Gestion des erreurs
-			 */
+
 			$errors = validate_unit($_POST);
 
 			if(empty($errors)) {
@@ -97,7 +95,7 @@ function add() {
 				inject_errors($post, $errors);
 			}
 		} else {
-			session_set_flash('Formulaire incorect...', 'error');
+			session_set_flash('Formulaire incorrect...', 'error');
 		}
 	}
 

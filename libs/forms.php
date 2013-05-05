@@ -53,6 +53,7 @@ function form_select($name, array $options = array()) {
 	$exceptions = array(
 		'help',
 		'state',
+		'type',
 		'id',
 		'label',
 		'values',
@@ -119,6 +120,7 @@ function form_checkbox($name, array $options = array()) {
 		'state',
 		'id',
 		'label',
+		'type',
 		'checked',
 		'value'
 	);

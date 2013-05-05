@@ -62,7 +62,8 @@ function add(array $params = null) {
 	$q = 'SELECT *
 		FROM produit
 		INNER JOIN stock ON (stock.numProduit = produit.num)
-		WHERE stock.quantite > 0';
+		WHERE stock.quantite > 0
+		ORDER BY produit.nom';
 	$r = mysql_query($q);
 	while ($d = mysql_fetch_assoc($r)) {
 		$products[$d['num']] = $d['nom'];
@@ -200,4 +201,99 @@ function del($params) {
 	redirect(url(array(
 		'action' => 'command'
 	)));
+}
+
+function edit($params) {
+	kick();
+
+	if(!is_numeric($params[0])) {
+		session_set_flash("Erreur de paramètres", 'error');
+		redirect(url(array(
+			'action' => 'command'
+		)));
+	}
+
+	mysql_auto_connect();
+
+	$id = (int) $params[0];
+	// On récupère les unités / dépôts / produits
+	// units
+	$r = mysql_query(sql_select('num, nom, cp', 'unite_fabrication'));
+	$units = array();
+	while ($d = mysql_fetch_assoc($r)) {
+		$units[$d['num']] = $d['nom'] . ' - ' . $d['cp'];
+	}
+	// depots
+	$r = mysql_query(sql_select('num, nom, cp', 'depot'));
+	$depots = array();
+	while ($d = mysql_fetch_assoc($r)) {
+		$depots[$d['num']] = $d['nom'] . ' - ' . $d['cp'];
+	}
+	// products
+	$q = 'SELECT *
+		FROM produit
+		INNER JOIN stock ON (stock.numProduit = produit.num)
+		WHERE stock.quantite > 0
+		ORDER BY produit.nom';
+	$r = mysql_query($q);
+	while ($d = mysql_fetch_assoc($r)) {
+		$products[$d['num']] = $d['nom'];
+	}
+
+	// Commandes
+	$r = mysql_query('SELECT * FROM commande WHERE num=' . $id);
+	$commande = mysql_fetch_assoc($r);
+
+	$champs = array(
+		'num' => array(
+			'label' => 'Numéro de commande',
+			'value' => $id,
+			'readonly' => 'true'
+		),
+		'numUnite' => array(
+			'label' => 'Unité de fabrication',
+			'value' => $commande['numUnite'],
+			'readonly' => 'true'
+		),
+		'numDepot' => array(
+			'label' => 'Dépôt',
+			'value' => $commande['numDepot'],
+			'readonly' => 'true'
+		)
+	);
+
+	$r = mysql_query('SELECT * FROM ligne_commande WHERE numCommande=' . $id);
+	$lignes = mysql_fetch_all($r);
+	foreach ($lignes as $k => $ligne) {
+		$tmp['numProduit[' . $k . ']'] = array(
+			'label' => 'Produit',
+			'type' => 'select',
+			'values' => $products,
+			'value' => $ligne['numProduit']
+		);
+		$tmp['quantite[' . $k . ']'] = array(
+			'label' => 'Produit',
+			'value' => $ligne['quantite']
+		);
+		$champs = array_merge($champs, $tmp);
+	}
+
+	var_dump($champs);
+
+	$errors = array();
+	if(!empty($_POST)) {
+		if(array_keys($_POST) == array_keys($champs)) {
+			var_dump($_POST);
+			$errors = validate_command($_POST, $champs);
+
+			if(empty($errors)) {
+			} else {
+				inject_errors($champs, $errors);
+			}
+		}
+	}
+
+	return array(
+		'champs' => $champs
+	);
 }
