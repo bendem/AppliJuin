@@ -108,3 +108,21 @@ function validate_stock($post, $champs) {
 
 	return $errors;
 }
+
+function validate_command($post, $champs) {
+	$errors = array();
+	if(!in_array($post['numUnite'], array_keys($champs['numUnite']['values']))) {
+		$errors['numUnite'] = "Vous ne pouvez pas choisir vous même les valeurs...";
+	}
+	if(!in_array($post['numProduit'], array_keys($champs['numProduit']['values']))) {
+		$errors['numProduit'] = "Vous ne pouvez pas choisir vous même les valeurs...";
+	}
+	if(!in_array($post['numDepot'], array_keys($champs['numDepot']['values']))) {
+		$errors['numDepot'] = "Vous ne pouvez pas choisir vous même les valeurs...";
+	}
+	if(!is_numeric($post['quantite']) || $post['quantite'] <= 0) {
+		$errors['quantite'] = "La quantité doit être un nombre positif...";
+	}
+
+	return $errors;
+}

@@ -87,15 +87,57 @@ function add(array $params = null) {
 			'type' => 'select',
 			'values' => $products,
 			'value' => (int) $numProduit
+		),
+		'quantite' => array(
+			'label' => 'Quantité'
 		)
 	);
 
+	$errors = array();
 	// Traitement du post
 	if(!empty($_POST)) {
 		if(array_keys($_POST) == array_keys($champs)) {
-			var_dump($_POST);
+
+			$errors = validate_command($_POST, $champs);
+
+			if(empty($errors)) {
+				$r = mysql_query(sql_select(
+					'num',
+					'commande',
+					array(
+						'numUnite' => $_POST['numUnite'],
+						'numDepot' => $_POST['numDepot'],
+						'dateCommande' => date("Y-m-d")
+					)
+				));
+				if(mysql_num_rows($r) == 0) {
+					// Si la commande n'existe pas encore on la crée
+					mysql_query(sql_insert(
+						array(
+							'numUnite' => $_POST['numUnite'],
+							'numDepot' => $_POST['numDepot'],
+							'dateCommande' => date("Y-m-d")
+						), 'commande'
+					));
+					$num = mysql_insert_id();
+				} else {
+					$d = mysql_fetch_assoc($r);
+					$num = $d['num'];
+				}
+				mysql_query(sql_insert(
+					array(
+						'numCommande' => $num,
+						'numProduit' => $_POST['numProduit'],
+						'quantite' => $_POST['quantite']
+					), 'ligne_commande'
+				));
+				session_set_flash("Produit ajouté à la commande n° $num");
+			} else {
+				inject_errors($champs, $errors);
+			}
 		}
 	}
+
 
 	return array(
 		'champs' => $champs,

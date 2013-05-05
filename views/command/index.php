@@ -10,7 +10,7 @@
 
 <div class="row-fluid">
 	<div class="span12">
-		<table class="table">
+		<table class="table table-striped table-hover">
 			<thead>
 				<tr>
 					<th>#</th>
