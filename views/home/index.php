@@ -13,6 +13,13 @@
 				</tr>
 			</thead>
 			<tbody>
+				<?php if(empty($commands)): ?>
+					<tr>
+						<td colspan="4" style="text-align: center;">
+							<div class="alert alert-error">Pas de données</div>
+						</td>
+					</tr>
+				<?php endif; ?>
 				<?php foreach($commands as $v): ?>
 					<tr>
 						<td><?= date('d-m-Y', strtotime($v['dateCommande'])) ?></td>
@@ -43,6 +50,13 @@
 				</tr>
 			</thead>
 			<tbody>
+				<?php if(empty($products)): ?>
+					<tr>
+						<td colspan="3" style="text-align: center;">
+							<div class="alert alert-error">Pas de données</div>
+						</td>
+					</tr>
+				<?php endif; ?>
 				<?php foreach($products as $v): ?>
 					<tr>
 						<td><?= $v['num'] ?></td>
@@ -75,6 +89,13 @@
 				</tr>
 			</thead>
 			<tbody>
+				<?php if(empty($depots)): ?>
+					<tr>
+						<td colspan="3" style="text-align: center;">
+							<div class="alert alert-error">Pas de données</div>
+						</td>
+					</tr>
+				<?php endif; ?>
 				<?php foreach($depots as $v): ?>
 					<tr>
 						<td><?= $v['nom'] ?></td>
@@ -104,6 +125,13 @@
 				</tr>
 			</thead>
 			<tbody>
+				<?php if(empty($units)): ?>
+					<tr>
+						<td colspan="3" style="text-align: center;">
+							<div class="alert alert-error">Pas de données</div>
+						</td>
+					</tr>
+				<?php endif; ?>
 				<?php foreach($units as $v): ?>
 					<tr>
 						<td><?= $v['nom'] ?></td>

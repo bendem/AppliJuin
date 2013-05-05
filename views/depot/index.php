@@ -1,4 +1,4 @@
-<?php $title_for_layout = 'Édition de dépôts' ?>
+<?php $title_for_layout = 'Dépôts' ?>
 
 <div class="row-fluid">
 	<div class="span12">
@@ -38,7 +38,7 @@
 			<tbody>
 				<?php if(empty($data)): ?>
 					<tr>
-						<td colspan="7" style="text-align: center;">
+						<td colspan="8" style="text-align: center;">
 							<div class="alert alert-error">Pas de données</div>
 						</td>
 					</tr>

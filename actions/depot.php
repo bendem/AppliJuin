@@ -125,20 +125,28 @@ function del($params) {
 
 	if(is_numeric($params[0])) {
 		$id = (int) $params[0];
+		mysql_auto_connect();
+
+		$q = 'DELETE FROM depot WHERE num=' . $id;
+		if(mysql_query($q)) {
+			$d = mysql_fetch_all(mysql_query('SELECT num FROM commande WHERE numDepot=' . $id));
+			$nums = array();
+			foreach ($d as $v) {
+				$nums['commande'][] = 'num=' . $v['num'];
+				$nums['ligne_commande'][] = 'numCommande=' . $v['num'];
+			}
+			if(!empty($nums)) {
+				mysql_query('DELETE FROM commande WHERE ' . implode(' OR ', $nums['commande']));
+				mysql_query('DELETE FROM ligne_commande WHERE ' . implode(' OR ', $nums['ligne_commande']));
+			}
+			session_set_flash('Dépôt supprimé avec succès', 'success');
+		} else {
+			session_set_flash('Erreur interne (' . $q . ')', 'error');
+		}
 	} else {
 		session_set_flash('Problème de paramètres pour la suppression', 'error');
-		redirect(url(array(
-			'action' => 'depot'
-		)));
 	}
 
-	mysql_auto_connect();
-	$q = 'DELETE FROM depot WHERE num=' . $id;
-	if(mysql_query($q)) {
-		session_set_flash('Dépôt supprimé avec succès', 'success');
-	} else {
-		session_set_flash('Erreur interne (' . $q . ')', 'error');
-	}
 	redirect(url(array(
 		'action' => 'depot'
 	)));

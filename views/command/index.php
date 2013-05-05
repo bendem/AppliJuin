@@ -23,6 +23,13 @@
 				</tr>
 			</thead>
 			<tbody>
+				<?php if(empty($data)): ?>
+					<tr>
+						<td colspan="7" style="text-align: center;">
+							<div class="alert alert-error">Pas de données</div>
+						</td>
+					</tr>
+				<?php endif; ?>
 				<?php foreach($data as $v): ?>
 					<tr>
 						<td><?= $v['num'] ?></td>
