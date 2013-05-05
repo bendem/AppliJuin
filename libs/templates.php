@@ -129,6 +129,13 @@ function nav_sidebar() {
 	return $html;
 }
 
+/**
+ * Affiche les boutons d'actions dans les tableaux recap
+ * @param  string $action Champs action de l'url
+ * @param  array $params Paramètres de $del_confirm_text
+ * @param  string $del_confirm_text Url de suppression
+ * @return string Code html
+ */
 function actions($action, $params, $del_confirm_text) {
 	foreach ($params as $v) {
 		$del_confirm_text = preg_replace("/(%s)/", $v, $del_confirm_text, 1);

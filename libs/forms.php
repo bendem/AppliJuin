@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Génère un formulaire depuis une liste de champs
+ * @param  array $champs Liste de champs à passer
+ * @return string Code du formulaire
+ */
 function form($champs) {
 	ob_start();
 	require TEMPLATES_DIR . DS . 'form.php';

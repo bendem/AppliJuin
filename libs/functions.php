@@ -218,6 +218,11 @@ function boum() {
 	<?php
 }
 
+/**
+ * Injecte le tableau d'erreur dans les champs du formulaire
+ * @param  array $champs Champs du formulaire
+ * @param  array $errors Tableau d'erreur
+ */
 function inject_errors(&$champs, $errors) {
 	foreach ($champs as $k => $v) {
 		if(isset($errors[$k])) {
@@ -230,6 +235,12 @@ function inject_errors(&$champs, $errors) {
 	}
 }
 
+/**
+ * Entoure du texte avec un span.label
+ * @param  string $text Texte à entourer
+ * @param  string $type Type de label
+ * @return string Code html du label
+ */
 function labelize($text, $type = 'info') {
 	return '<span class="label label-' . $type . '">' . $text . '</span>';
 }
