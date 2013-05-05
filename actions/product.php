@@ -29,7 +29,8 @@ function index($params) {
 	}
 
 	return array(
-		'tri' => $tri_url,
+		'tri' => $tri,
+		'tri_url' => $tri_url,
 		'data' => $data,
 		'del_confirm' => htmlentities('Êtes-vous sûr ? <a href="' . url(array(
 			'action' => 'product',
@@ -196,10 +197,13 @@ function info($params) {
 	if(is_numeric($params[0])) {
 		$id = $params[0];
 		mysql_auto_connect();
-		$data = mysql_fetch_assoc(mysql_query(sql_select('*', 'produit', array('num' => $id))));
+		$data = mysql_fetch_assoc(mysql_query('SELECT * FROM produit
+			LEFT JOIN stock ON (stock.numProduit=produit.num)
+			WHERE produit.num=' . $id
+		));
 	}
 	return array(
-		'data' => $data
+		'd' => $data
 	);
 }
 

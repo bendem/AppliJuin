@@ -235,11 +235,9 @@ function edit($params) {
 				$champs[$k]['checked'] = true;
 			}
 		}
-		if(isset($errors[$k])) {
-			$champs[$k]['help'] = $errors[$k];
-			$champs[$k]['state'] = 'warning';
-		}
 	}
+
+	inject_errors($champs, $errors);
 
 	return array(
 		'data' => $champs
@@ -253,6 +251,14 @@ function info($params) {
 		$data = mysql_fetch_assoc(mysql_query(sql_select('*', 'depot', array('num' => $id))));
 	}
 	return array(
-		'data' => $data
+		'resp' => array(
+			'',
+			'XA' => 'XA',
+			'GT' => 'GT',
+			'LP' => 'LP',
+			'RS' => 'RS',
+			'TT' => 'TT'
+		),
+		'd' => $data
 	);
 }

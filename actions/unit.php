@@ -203,6 +203,6 @@ function info($params) {
 		$data = mysql_fetch_assoc(mysql_query(sql_select('*', 'unite_fabrication', array('num' => $id))));
 	}
 	return array(
-		'data' => $data
+		'd' => $data
 	);
 }

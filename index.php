@@ -18,6 +18,7 @@ define('PARAMS_DELIMITER', '-');
 define('INDEX_ACTION', 'home');
 define('DEBUG', true);
 define('LOCAL', (DS == '\\'));
+define('SYMBOLE_PRIX', ' €');
 
 /* Récupération de la vue à charger, de l'action a effectuer et des paramètres */
 $req['view'] = (isset($_GET['view'])) ? $_GET['view'] : 'index';

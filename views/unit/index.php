@@ -14,6 +14,7 @@
 	<div class="row-fluid">
 		<div class="span12">
 			<a href="<?= url(array('action' => $req['action'], 'view' => 'add')) ?>" class="btn btn-block btn-large btn-info">
+				<span class="icon-plus-sign icon-white"></span>
 				Ajouter une unité de fabrication
 			</a>
 		</div>

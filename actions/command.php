@@ -144,3 +144,35 @@ function add(array $params = null) {
 		'products' => !empty($products)
 	);
 }
+
+function info($params) {
+	if(is_numeric($params[0])) {
+		$id = $params[0];
+		mysql_auto_connect();
+
+		$q = 'SELECT commande.*,
+				depot.nom as nomDepot,
+				depot.adresse as adresseDepot,
+				depot.ville as villeDepot,
+				depot.cp as cpDepot,
+				unite_fabrication.nom as nomUnite,
+				unite_fabrication.adresse as adresseUnite,
+				unite_fabrication.ville as villeUnite,
+				unite_fabrication.cp as cpUnite
+			FROM commande
+			INNER JOIN depot ON (depot.num=commande.numDepot)
+			INNER JOIN unite_fabrication ON (unite_fabrication.num=commande.numUnite)
+			WHERE commande.num=' . $id;
+		$r = mysql_query($q);
+		$command = mysql_fetch_assoc($r);
+
+		$q = 'SELECT * FROM ligne_commande
+			INNER JOIN produit ON (produit.num=ligne_commande.numProduit)
+			WHERE ligne_commande.numCommande=' . $id;
+		$data = mysql_fetch_all(mysql_query($q));
+	}
+	return array(
+		'command' => $command,
+		'd' => $data
+	);
+}

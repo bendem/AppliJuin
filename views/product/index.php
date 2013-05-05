@@ -19,7 +19,7 @@
 					<th>Nom</th>
 					<th>Unité de mesure</th>
 					<th>
-						<a href="<?= url($tri) ?>" data-toggle="tooltip" data-title="Tri ascendant">
+						<a href="<?= url($tri_url) ?>" data-toggle="tooltip" data-title="Tri <?= $tri ?>endant">
 							Prix
 						</a>
 					</th>
@@ -41,7 +41,7 @@
 						<td><?= $v['num'] ?></td>
 						<td><?= $v['nom'] ?></td>
 						<td><?= $v['uniteMesure'] ?></td>
-						<td><?= $v['prix'] ?></td>
+						<td><?= $v['prix'] . SYMBOLE_PRIX ?></td>
 						<td><?= $v['type'] ?></td>
 						<td>
 							<?= ($v['categorie']) ? 'oui' : 'non' ?>
