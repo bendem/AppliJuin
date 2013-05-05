@@ -24,7 +24,8 @@ function form_input($name, array $options = array()) {
 		'state',
 		'type',
 		'id',
-		'label'
+		'label',
+		'values'
 	);
 
 	// on enlève les attributs spéciaux du tableau d'options

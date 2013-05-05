@@ -253,14 +253,50 @@ function edit($params) {
 		'numUnite' => array(
 			'label' => 'Unité de fabrication',
 			'value' => $commande['numUnite'],
+			'values' => $units,
 			'readonly' => 'true'
 		),
 		'numDepot' => array(
 			'label' => 'Dépôt',
+			'values' => $depots,
 			'value' => $commande['numDepot'],
 			'readonly' => 'true'
 		)
 	);
+
+	$errors = array();
+	if(!empty($_POST)) {
+
+		foreach ($_POST['quantite'] as $k => $v) {
+			if(!is_numeric($v) || strpos($v, '.') !== false) {
+				$errors['quantite[' . $k . ']'] = 'La quantité doit être un nombre entier';
+			}
+		}
+
+		if(empty($errors)) {
+			$err = array();
+			foreach ($_POST['quantite'] as $k => $v) {
+				if($v == 0) {
+					$q = 'DELETE FROM ligne_commande WHERE numProduit=' . $_POST['numProduit'][$k] .
+						' AND numCommande=' . $_POST['num'];
+				} else {
+					$q = 'UPDATE ligne_commande SET quantite=' . $v .
+						' WHERE numProduit=' . $_POST['numProduit'][$k] . ' AND numCommande=' . $_POST['num'];
+				}
+				if(!mysql_query($q)) {
+					$err[] = $q;
+				}
+			}
+			if(empty($err)) {
+				session_set_flash('Commande mise à jour');
+			} else {
+				session_set_flash('Erreur interne', 'error');
+				var_dump($err);
+			}
+		} else {
+			inject_errors($champs, $errors);
+		}
+	}
 
 	$r = mysql_query('SELECT * FROM ligne_commande WHERE numCommande=' . $id);
 	$lignes = mysql_fetch_all($r);
@@ -268,29 +304,18 @@ function edit($params) {
 		$tmp['numProduit[' . $k . ']'] = array(
 			'label' => 'Produit',
 			'type' => 'select',
-			'values' => $products,
-			'value' => $ligne['numProduit']
+			'value' => $ligne['numProduit'],
+			'values' => array(
+				$ligne['numProduit'] => $products[$ligne['numProduit']]
+			),
+			'readonly' => 'true',
+			'class' => 'disabled'
 		);
 		$tmp['quantite[' . $k . ']'] = array(
-			'label' => 'Produit',
+			'label' => 'Quantité',
 			'value' => $ligne['quantite']
 		);
 		$champs = array_merge($champs, $tmp);
-	}
-
-	var_dump($champs);
-
-	$errors = array();
-	if(!empty($_POST)) {
-		if(array_keys($_POST) == array_keys($champs)) {
-			var_dump($_POST);
-			$errors = validate_command($_POST, $champs);
-
-			if(empty($errors)) {
-			} else {
-				inject_errors($champs, $errors);
-			}
-		}
 	}
 
 	return array(

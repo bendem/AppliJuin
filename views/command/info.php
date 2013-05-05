@@ -2,6 +2,18 @@
 <?php $total = 0; ?>
 
 <div class="row-fluid">
+	<div class="span12">
+		<a href="<?= url(array(
+			'action' => 'command',
+			'view' => 'edit',
+			'params' => array($command['num'])
+		)) ?>" class="btn btn-info btn-block btn-large">
+			Éditer la commande
+		</a>
+	</div>
+</div>
+
+<div class="row-fluid">
 	<div class="span1">
 		<strong>De</strong>
 	</div>

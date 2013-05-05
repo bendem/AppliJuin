@@ -231,7 +231,9 @@ function inject_errors(&$champs, $errors) {
 		} else {
 			$champs[$k]['state'] = 'success';
 		}
-		$champs[$k]['value'] = $_POST[$k];
+		if(isset($_POST['$k'])) {
+			$champs[$k]['value'] = $_POST[$k];
+		}
 	}
 }
 

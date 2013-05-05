@@ -1,4 +1,5 @@
 <?php $title_for_layout = 'Produits' ?>
+<?php $writed = array(); ?>
 
 <div class="row-fluid">
 	<div class="span12">
@@ -47,29 +48,32 @@
 					</tr>
 				<?php endif; ?>
 				<?php foreach($data as $v): ?>
-					<tr>
-						<td><?= $v['num'] ?></td>
-						<td><?= $v['nom'] ?></td>
-						<td><?= $v['uniteMesure'] ?></td>
-						<td><?= $v['prix'] . SYMBOLE_PRIX ?></td>
-						<td><?= $v['type'] ?></td>
-						<td>
-							<?= ($v['categorie']) ? 'oui' : 'non' ?>
-						</td>
-						<td>
-							<?php if(is_connected()): ?>
-								<a href="<?= url(array(
-									'action' => 'command',
-									'view' => 'add',
-									'params' => array(
-										3, $v['num'] // le 3 sert à préciser que c'est un produit
-									))) ?>" class="btn <?= ($v['quantite']) ? '' : 'disabled' ?>" data-toggle="tooltip" data-title="Effectuer une commande">
-									<span class="icon-shopping-cart"></span>
-								</a>
-							<?php endif; ?>
-							<?= actions($req['action'], array($v['num']), $del_confirm) ?>
-						</td>
-					</tr>
+					<?php if(!in_array($v['num'], $writed)): ?>
+						<?php $writed[] = $v['num'] ?>
+						<tr>
+							<td><?= $v['num'] ?></td>
+							<td><?= $v['nom'] ?></td>
+							<td><?= $v['uniteMesure'] ?></td>
+							<td><?= $v['prix'] . SYMBOLE_PRIX ?></td>
+							<td><?= $v['type'] ?></td>
+							<td>
+								<?= ($v['categorie']) ? 'oui' : 'non' ?>
+							</td>
+							<td>
+								<?php if(is_connected()): ?>
+									<a href="<?= url(array(
+										'action' => 'command',
+										'view' => 'add',
+										'params' => array(
+											3, $v['num'] // le 3 sert à préciser que c'est un produit
+										))) ?>" class="btn <?= ($v['quantite']) ? '' : 'disabled' ?>" data-toggle="tooltip" data-title="Effectuer une commande">
+										<span class="icon-shopping-cart"></span>
+									</a>
+								<?php endif; ?>
+								<?= actions($req['action'], array($v['num']), $del_confirm) ?>
+							</td>
+						</tr>
+					<?php endif; ?>
 				<?php endforeach; ?>
 			</tbody>
 		</table>

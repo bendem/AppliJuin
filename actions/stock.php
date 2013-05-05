@@ -118,6 +118,7 @@ function edit($params) {
 			$errors = validate_stock($_POST, $champs);
 
 			if(empty($errors)) {
+				unset($_POST['edit']);
 				$sql = sql_insert($_POST, 'stock');
 				$sql .= ' ON DUPLICATE KEY UPDATE quantite=' . $_POST['quantite'];
 				if(mysql_query($sql)) {
