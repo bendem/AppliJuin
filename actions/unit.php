@@ -107,17 +107,38 @@ function add() {
 }
 
 function del($params) {
-	/**
-	 * Penser à supprimer les produits correspondants !!!
-	 */
 	kick();
 	if(is_numeric($params[0])) {
 		$id = (int) $params[0];
+		$nb = false;
 
 		mysql_auto_connect();
-		$q = 'DELETE FROM unite_fabrication WHERE num=' . $id;
-		if(mysql_query($q)) {
-			session_set_flash('Unité supprimée avec succès', 'success');
+
+		// Suppression de l'unité
+		$r = mysql_query('DELETE FROM unite_fabrication WHERE num=' . $id);
+		if($r) {
+			// Suppression des commandes correspondantes
+			$q = 'SELECT num FROM commande WHERE numUnite=' . $id;
+			$r = mysql_query($q);
+			$d = mysql_fetch_all($r);
+			$nums = array();
+			foreach ($d as $v) {
+				$nums['ligne_commande'][] = 'numCommande=' . $v['num'];
+				$nums['commande'][] = 'num=' . $v['num'];
+			}
+			if(!empty($nums)) {
+				$r = mysql_query('DELETE FROM ligne_commande WHERE ' . implode(' OR ', $nums['ligne_commande']));
+				if($r) {
+					if(mysql_query('DELETE FROM commande WHERE ' . implode(' OR ', $nums['commande']))) {
+						$nb = mysql_affected_rows();
+					}
+				}
+			}
+			$msg = 'Unité supprimée avec succès... ';
+			if($nb) {
+				$msg .= $nb . ' commande' . (($nb > 1) ? 's ont été supprimées' : ' a été supprimée ') . ' également';
+			}
+			session_set_flash($msg, 'success');
 		} else {
 			session_set_flash('Erreur interne', 'error');
 		}
