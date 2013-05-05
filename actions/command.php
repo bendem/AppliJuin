@@ -176,3 +176,28 @@ function info($params) {
 		'd' => $data
 	);
 }
+
+function del($params) {
+	kick();
+
+	if(is_numeric($params[0])) {
+		$id = (int) $params[0];
+		mysql_auto_connect();
+
+		$q = 'DELETE FROM commande WHERE num=' . $id;
+		$r = mysql_query($q);
+		if($r) {
+			$r = mysql_query('DELETE FROM ligne_commande WHERE numCommande=' . $id);
+			if($r) {
+				session_set_flash('Commande supprimée avec succès');
+			} else {
+				session_set_flash('Erreur interne', 'error');
+			}
+		} else {
+			session_set_flash('Erreur interne', 'error');
+		}
+	}
+	redirect(url(array(
+		'action' => 'command'
+	)));
+}

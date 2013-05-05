@@ -119,9 +119,10 @@ function add() {
 
 function del($params) {
 	/**
-	 * Penser à supprimer les produits correspondants !!!
+	 * Penser à supprimer les produits et les commandes correspondants !!!
 	 */
 	kick();
+
 	if(is_numeric($params[0])) {
 		$id = (int) $params[0];
 	} else {
@@ -134,7 +135,7 @@ function del($params) {
 	mysql_auto_connect();
 	$q = 'DELETE FROM depot WHERE num=' . $id;
 	if(mysql_query($q)) {
-		session_set_flash('Dépôt avec succès', 'success');
+		session_set_flash('Dépôt supprimé avec succès', 'success');
 	} else {
 		session_set_flash('Erreur interne (' . $q . ')', 'error');
 	}
@@ -215,7 +216,7 @@ function edit($params) {
 	));
 	$r = mysql_query($sql);
 	if(!$data = mysql_fetch_assoc($r)) {
-		session_set_flash("Ce dépôt n'existe pas...", 'error');
+		session_set_flash("Ce dépôt n'existe pas", 'error');
 		redirect(url(array(
 			'action' => 'depot'
 		)));

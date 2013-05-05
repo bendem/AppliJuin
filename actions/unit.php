@@ -190,7 +190,7 @@ function edit($params) {
 	));
 	$r = mysql_query($sql);
 	if(!$data = mysql_fetch_assoc($r)) {
-		session_set_flash("Cette unité n'existe pas...", 'error');
+		session_set_flash("Cette unité n'existe pas", 'error');
 		redirect(url(array(
 			'action' => 'unit'
 		)));

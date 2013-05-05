@@ -31,7 +31,7 @@ function login() {
 			session_set_flash('Vous êtes bien connecté', 'success');
 			redirect(url());
 		} else {
-			session_set_flash("Vérifiez votre nom d'utilisateur ou votre mdp...", 'error');
+			session_set_flash("Vérifiez votre nom d'utilisateur ou votre mdp", 'error');
 		}
 	}
 
@@ -73,9 +73,9 @@ function register() {
 			$res = mysql_query($q);
 
 			if($res) {
-				session_set_flash("Vous avez bien été enregistré...", 'success');
+				session_set_flash("Vous avez bien été enregistré", 'success');
 			} else {
-				session_set_flash("Erreur interne...", 'error');
+				session_set_flash("Erreur interne", 'error');
 			}
 		}
 	}

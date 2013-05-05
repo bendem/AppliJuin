@@ -162,7 +162,7 @@ function edit($params) {
 	));
 	$r = mysql_query($sql);
 	if(!$data = mysql_fetch_assoc($r)) {
-		session_set_flash("Ce produit n'existe pas...", 'error');
+		session_set_flash("Ce produit n'existe pas", 'error');
 		redirect(url(array(
 			'action' => 'produit'
 		)));
@@ -208,18 +208,41 @@ function info($params) {
 }
 
 function del($params) {
-	/**
-	 * Penser à supprimer les stocks correspondants !!!
-	 */
 	kick();
-	if(is_string($params[0]) && is_numeric($params[1])) {
-		$nom = $params[0];
-		$id = (int) $params[1];
-
+	if(is_numeric($params[0])) {
+		$id = (int) $params[0];
 		mysql_auto_connect();
+		$msg = 'Produit supprimé avec succès... ';
+
+		// Suppression du produit
 		$q = 'DELETE FROM produit WHERE num=' . $id;
 		if(mysql_query($q)) {
-			session_set_flash('Produit supprimé avec succès', 'success');
+			// On enlève le produit des stocks
+			mysql_query('DELETE FROM stock WHERE numProduit=' . $id);
+			$nb = mysql_affected_rows();
+			if($nb > 0) {
+				$msg .= '(' . $nb . ' ligne' . (($nb > 1) ? 's' : '') . ' de stock supprimée' . (($nb > 1) ? 's' : '') . ')';
+			}
+			// On supprime les commandes du produit
+			mysql_query('DELETE FROM ligne_commande WHERE numProduit=' . $id);
+			// On supprime les commandes vides
+			$q = 'SELECT num FROM commande WHERE NOT EXISTS(
+					SELECT * FROM ligne_commande WHERE numCommande=num
+				)';
+			$r = mysql_query($q);
+			$d = mysql_fetch_all($r);
+			$nums = array();
+			foreach ($d as $v) {
+				$nums[] = 'num=' . $v['num'];
+			}
+			if(!empty($nums)) {
+				mysql_query('DELETE FROM commande WHERE ' . implode(' OR ', $nums));
+				$nb = mysql_affected_rows();
+				if($nb > 0) {
+					$msg .= ' (' . $nb . ' commande' . (($nb > 1) ? 's' : '') . ' supprimée' . (($nb > 1) ? 's' : '') . ')';
+				}
+			}
+			session_set_flash($msg, 'success');
 		} else {
 			session_set_flash('Erreur interne', 'error');
 		}

@@ -229,3 +229,7 @@ function inject_errors(&$champs, $errors) {
 		$champs[$k]['value'] = $_POST[$k];
 	}
 }
+
+function labelize($text, $type = 'info') {
+	return '<span class="label label-' . $type . '">' . $text . '</span>';
+}

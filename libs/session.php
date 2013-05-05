@@ -65,7 +65,7 @@ function session_set_flash($msg, $type = 'success') {
 function session_flash() {
 	$html = '';
 	foreach (session_read('flash') as $v) {
-		$html .= '<div class="alert alert-' . $v['type'] . '">' . $v['msg'] . '<a href="#" class="close" data-dismiss="alert">&times;</a></div>';
+		$html .= '<div class="alert alert-' . $v['type'] . '">' . $v['msg'] . '...<a href="#" class="close" data-dismiss="alert">&times;</a></div>';
 	}
 
 	session_write(array(), 'flash');

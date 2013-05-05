@@ -125,7 +125,7 @@ function edit($params) {
 				}
 			} else {
 				session_set_flash('Il y a des erreurs dans le formulaire...', 'warning');
-				inject_errors($champs, $errors)
+				inject_errors($champs, $errors);
 			}
 		} else {
 			session_set_flash('Formulaire incorect...', 'error');
@@ -149,4 +149,31 @@ function del($params) {
 	redirect(url(array(
 		'action' => 'stock'
 	)));
+}
+
+function info($params) {
+	if(is_numeric($params[0])) {
+		mysql_auto_connect();
+		$q = 'SELECT
+				stock.*,
+				produit.nom as nomProduit,
+				produit.prix as prixProduit,
+				produit.type as typeProduit,
+				produit.categorie as categorieProduit,
+				produit.uniteMesure as uniteProduit,
+				depot.nom as nomDepot,
+				depot.adresse as adresseDepot,
+				depot.ville as villeDepot,
+				depot.cp as cpDepot,
+				depot.capaciteStockage as capaciteDepot,
+				depot.responsable as responsableDepot
+			FROM stock
+			INNER JOIN produit ON (stock.numProduit=produit.num)
+			INNER JOIN depot ON (stock.numDepot=depot.num)
+			WHERE stock.numDepot=' . $params[0] . ' AND stock.numProduit=' . $params[1];
+		$data = mysql_fetch_assoc(mysql_query($q));
+	}
+	return array(
+		'd' => $data
+	);
 }
