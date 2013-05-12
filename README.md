@@ -1,8 +1,9 @@
-# Ceci est mon travail de fin d'année de première infogestion (INPRES Seraing)
+# AppliJuin première infogestion
 
 ## Le projet
 
-Faire une gestion de stock/produits/dépôts/commandes...
+Ceci est mon travail de fin d'année de première infogestion (INPRES Seraing)
+Le but de celui-ci était de faire une gestion de stock/produits/dépôts/commandes...
 
 ## Plus d'infos
 
@@ -16,3 +17,4 @@ Faire une gestion de stock/produits/dépôts/commandes...
 ## Divers
 
 + L'énoncé et la base de données sont dans le dossier ressources
++ Tous les PR seront refusé, ne vous cassez pas la tête
