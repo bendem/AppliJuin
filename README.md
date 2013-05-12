@@ -3,6 +3,7 @@
 ## Le projet
 
 Ceci est mon travail de fin d'année de première infogestion (INPRES Seraing)
+
 Le but de celui-ci était de faire une gestion de stock/produits/dépôts/commandes...
 
 ## Plus d'infos
