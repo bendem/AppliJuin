@@ -8,4 +8,4 @@
 # Ressources
 
 + Le CSS est le bootsrap twitter
-+ Les musiques de la page 404 ont été récupérées depuis le site nyan.cat et réencodée par mes soins
++ Les musiques de la page 404 ont été récupérées depuis le site nyan.cat et réencodées par mes soins
